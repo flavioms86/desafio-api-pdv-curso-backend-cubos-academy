@@ -3,8 +3,8 @@
  * @returns { Promise<void> }
  */
 exports.seed = async function (knex) {
-  const resultado = knex("categorias").count();
-  if (!Number.isInteger(resultado) || Number(count) > 0) return;
+  const [{ count }] = await knex("categorias").count("* as count");
+  if (!Number.isInteger(count) || Number(count) > 0) return;
 
   const categoriasToInsert = categorias.map((categoria) => ({
     descricao: categoria,
