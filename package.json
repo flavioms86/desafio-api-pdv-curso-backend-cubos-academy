@@ -5,16 +5,24 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./src/index.js"
+    "dev": "nodemon ./src/index.js",
+    "knex:rollback-all": "knex --knexfile ./src/database/knex/Environment.ts migrate:rollback --all",
+    "knex:rollback": "knex --knexfile ./src/database/knex/Environment.ts migrate:rollback",
+    "knex:migrate-latest": "knex --knexfile ./src/database/knex/Environment.js migrate:latest",
+    "knex:migrate-next": "knex --knexfile ./src/database/knex/Environment.js migrate:up",
+    "knex:make": "knex --knexfile ./src/database/knex/Environment.js migrate:make categorias"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "knex": "^3.0.1",
+    "pg": "^8.11.3"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "sqlite3": "^5.1.6"
   }
 }
