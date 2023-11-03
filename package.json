@@ -6,11 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/index.js",
-    "knex:rollback-all": "knex --knexfile ./src/database/knex/Environment.ts migrate:rollback --all",
-    "knex:rollback": "knex --knexfile ./src/database/knex/Environment.ts migrate:rollback",
+    "knex:rollback-all": "knex --knexfile ./src/database/knex/Environment.js migrate:rollback --all",
+    "knex:rollback": "knex --knexfile ./src/database/knex/Environment.js migrate:rollback",
     "knex:migrate-latest": "knex --knexfile ./src/database/knex/Environment.js migrate:latest",
     "knex:migrate-next": "knex --knexfile ./src/database/knex/Environment.js migrate:up",
-    "knex:make": "knex --knexfile ./src/database/knex/Environment.js migrate:make categorias"
+    "knex:migrate-make": "knex --knexfile ./src/database/knex/Environment.js migrate:make categorias",
+    "knex:seed-make": "knex --knexfile ./src/database/knex/Environment.js seed:make categorias",
+    "knex:seed-run": "knex --knexfile ./src/database/knex/Environment.js seed:run"
   },
   "keywords": [],
   "author": "",
