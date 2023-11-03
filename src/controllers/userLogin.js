@@ -1,12 +1,21 @@
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const knex = require();
+const bcrypt = require("bcrypt");
 const { Pool } = require("pg");
+
+const knex = require('knex')({
+  client: 'pg',
+  connection: {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
+  }
+})
 
 module.exports = {
   async userLogin(req, res) {
     const { email, senha } = req.body;
-
 
     try {
       const user = await knex("usuarios").where({ email }).first();
@@ -30,12 +39,13 @@ module.exports = {
 
       const token = jwt.sign(
         { id: user.id },
-        process.env.JWT_SECRET || env.jwt.secret,
-        options.process.env.JWT_EXPIRES_IN || env.jwt.expires
+        process.env.JWT_SECRET,
+        process.env.JWT_EXPIRES_IN
       );
 
       return res.json({ usuario: loggedUser, token });
     } catch (error) {
+      console.log(error.message);
       return res.status(500).json({ mensagem: "Error interno do servidor" });
     }
   },
