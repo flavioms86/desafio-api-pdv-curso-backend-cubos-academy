@@ -13,6 +13,8 @@ const knex = require('knex')({
   }
 })
 
+
+
 module.exports = {
   async userLogin(req, res) {
     const { email, senha } = req.body;
@@ -40,8 +42,9 @@ module.exports = {
       const token = jwt.sign(
         { id: user.id },
         process.env.JWT_SECRET,
-        process.env.JWT_EXPIRES_IN
+        { expiresIn: process.env.JWT_EXPIRES_IN }
       );
+
 
       return res.json({ usuario: loggedUser, token });
     } catch (error) {
