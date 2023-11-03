@@ -33,7 +33,7 @@ const production = {
   seeds: {
     directory: path.resolve(__dirname, "..", "seeds"),
   },
-  conection: {
+  connection: {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     database: process.env.DB_NAME,

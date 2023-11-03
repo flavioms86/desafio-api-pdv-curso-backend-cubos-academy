@@ -2,7 +2,8 @@ const { knex } = require("knex");
 const pg = require("pg");
 require("dotenv").config();
 
-const { development, production, test } = require("./Environment");
+// const { development, production, test } = require("./Environment");
+const production = require("./Environment");
 
 if (process.env.NODE_ENV === "production") {
   pg.types.setTypeParser(20, "text", parseInt);
@@ -19,6 +20,6 @@ const getEnvironment = () => {
   }
 };
 
-const Knex = knex(getEnvironment());
+const Knex = knex(production);
 
 module.exports = Knex;
