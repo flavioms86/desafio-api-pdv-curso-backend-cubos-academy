@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { Pool } = require("pg");
+const fs = require("fs");
+const transportador = require("../utils/email");
 
 const knex = require('knex')({
   client: 'pg',
@@ -12,8 +13,6 @@ const knex = require('knex')({
     database: process.env.DB_NAME
   }
 })
-
-
 
 module.exports = {
   async userLogin(req, res) {
@@ -37,6 +36,17 @@ module.exports = {
           .json({ message: "Email e/ou senha inválido(s)." });
       }
 
+      const html = fs.readFileSync("src/utils/login.html", "utf8");
+
+      const emailContent = html.replace('{{nomeusuario}}', user.nome);
+
+      transportador.sendMail({
+        from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+        to: `${user.nome} <${user.email}>`,
+        subject: 'Tentativa de Login',
+        html: emailContent,
+      });
+
       const { senha: _, ...loggedUser } = user;
 
       const token = jwt.sign(
@@ -45,11 +55,11 @@ module.exports = {
         { expiresIn: process.env.JWT_EXPIRES_IN }
       );
 
-
       return res.json({ usuario: loggedUser, token });
+
     } catch (error) {
       console.log(error.message);
-      return res.status(500).json({ mensagem: "Error interno do servidor" });
+      return res.status(500).json({ mensagem: "Erro interno do servidor" });
     }
   },
 };

@@ -5,12 +5,8 @@ const { authenticateUser, validateUserSchema } = require("../middlewares/loginVa
 
 const router = require("express").Router();
 
-
 router.get("/api", testAPI);
-
-router.use(validateUserSchema)
-
-router.post("/login", userLogin);
+router.post("/login", validateUserSchema, userLogin);
 
 router.use(authenticateUser);
 
