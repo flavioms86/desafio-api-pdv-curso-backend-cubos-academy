@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
-const transportador = require("../utils/email");
+const transporter = require("../utils/email");
 
 const knex = require('knex')({
   client: 'pg',
@@ -23,7 +23,7 @@ module.exports = {
 
       if (!user) {
         return res
-          .status(404)
+          .status(401)
           .json({ message: "Email e/ou senha inválido(s)." });
       }
 
@@ -40,7 +40,7 @@ module.exports = {
 
       const emailContent = html.replace('{{nomeusuario}}', user.nome);
 
-      transportador.sendMail({
+      transporter.sendMail({
         from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
         to: `${user.nome} <${user.email}>`,
         subject: 'Tentativa de Login',

@@ -2,6 +2,7 @@ const joi = require("joi");
 const jwt = require("jsonwebtoken");
 
 const validateUserSchema = (req, res, next) => {
+
     const userSchema = joi.object({
         email: joi.string().email().required().messages({
             "string.base": "O campo email deve ser um texto",
@@ -21,7 +22,9 @@ const validateUserSchema = (req, res, next) => {
     const { error } = userSchema.validate({ email, senha });
 
     if (error) {
-        return res.status(400).json({ message: error.details[0].message });
+        return res.status(422).json({
+            error: error.message
+        });
     }
 
     next();
@@ -31,7 +34,7 @@ const validateUserSchema = (req, res, next) => {
 const authenticateUser = (req, res, next) => {
     const bearer = req.headers.authorization;
     if (!bearer) {
-        return res.status(400).json({
+        return res.status(401).json({
             "messagem": "Token não foi passado"
         });
     }
