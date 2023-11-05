@@ -27,19 +27,19 @@ module.exports = {
           .json({ message: "Email e/ou senha inválido(s)." });
       }
 
-      const html = await htmlCompiler(
-        "src/utils/email_notifications/login.html",
-        {
-          destinatario: user.nome,
-        }
-      );
+      // const html = await htmlCompiler(
+      //   "src/utils/email_notifications/login.html",
+      //   {
+      //     destinatario: user.nome,
+      //   }
+      // );
 
-      transporter.sendMail({
-        from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
-        to: `${user.nome} <${user.email}>`,
-        subject: "Tentativa de Login",
-        html,
-      });
+      // transporter.sendMail({
+      //   from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+      //   to: `${user.nome} <${user.email}>`,
+      //   subject: "Tentativa de Login",
+      //   html,
+      // });
 
       const token = jwt_token_user.sign({ id: user.id });
 

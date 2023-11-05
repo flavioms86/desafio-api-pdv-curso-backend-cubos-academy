@@ -1,55 +1,18 @@
-const joi = require("joi");
-const jwt = require("jsonwebtoken");
+const jwt_user_token = require("../utils/jwt/jwt_token_user");
+const jwt_password = require("../utils/jwt/jwt_hash");
 
-const validateUserSchema = (req, res, next) => {
+module.exports = async function (req, res, next) {
+  const bearerToken = req.headers.authorization;
 
-    const userSchema = joi.object({
-        email: joi.string().email().required().messages({
-            "string.base": "O campo email deve ser um texto",
-            "string.email": "Email inválido",
-            "string.empty": "Email não pode ser vazio",
-            "any.required": "Email é obrigatório",
-        }),
-        senha: joi.string().min(6).required().messages({
-            "string.empty": "Senha não pode ser vazia",
-            "string.min": "A senha deve ter pelo menos 6 caracteres",
-            "any.required": "Senha é obrigatória"
-        }),
-    });
+  if (!bearerToken) {
+    return res.status(400).json({ mensagem: "O token deve ser informado" });
+  }
 
-    const { email, senha } = req.body;
-
-    const { error } = userSchema.validate({ email, senha });
-
-    if (error) {
-        return res.status(422).json({
-            error: error.message
-        });
-    }
-
-    next();
-}
-
-
-const authenticateUser = (req, res, next) => {
-    const bearer = req.headers.authorization;
-    if (!bearer) {
-        return res.status(401).json({
-            "messagem": "Token não foi passado"
-        });
-    }
-    const token = bearer.split(' ')[1];
-    const user = jwt.getUser(token);
-    if (!user) {
-        return res.status(401).json({
-            "messagem": "Usuário não autorizado"
-        });
-    }
-    req.user = user;
-    next();
-}
-
-module.exports = {
-    validateUserSchema,
-    authenticateUser
+  const token = bearerToken.split(" ")[1];
+  const user = jwt_user_token.verify(token, jwt_password);
+  if (!user) {
+    return res.status(401).json({ mensagem: "Usuário e/ou senha inválido(s)" });
+  }
+  req.user = user;
+  next();
 };
