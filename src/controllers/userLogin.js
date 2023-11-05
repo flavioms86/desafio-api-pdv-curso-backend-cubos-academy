@@ -1,25 +1,17 @@
-const jwt = require("jsonwebtoken");
+const jwt_token_user = require("../utils/jwt/jwt_token_user");
 const bcrypt = require("bcrypt");
-const fs = require("fs");
-const transporter = require("../utils/email");
-
-const knex = require('knex')({
-  client: 'pg',
-  connection: {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME
-  }
-})
+const transporter = require("../utils/email_notifications/email_connection");
+const {
+  htmlCompiler,
+} = require("../utils/email_notifications/compilation_html");
+const { verifyUserProvider } = require("../database/providers/usuarios");
 
 module.exports = {
   async userLogin(req, res) {
     const { email, senha } = req.body;
 
     try {
-      const user = await knex("usuarios").where({ email }).first();
+      const user = await verifyUserProvider(email);
 
       if (!user) {
         return res
@@ -27,8 +19,7 @@ module.exports = {
           .json({ message: "Email e/ou senha inválido(s)." });
       }
 
-      const userPassword = user.senha;
-      const correctPassword = await bcrypt.compare(senha, userPassword);
+      const correctPassword = await bcrypt.compare(senha, user.senha);
 
       if (!correctPassword) {
         return res
@@ -36,29 +27,32 @@ module.exports = {
           .json({ message: "Email e/ou senha inválido(s)." });
       }
 
-      const html = fs.readFileSync("src/utils/login.html", "utf8");
-
-      const emailContent = html.replace('{{nomeusuario}}', user.nome);
+      const html = await htmlCompiler(
+        "src/utils/email_notifications/login.html",
+        {
+          destinatario: user.nome,
+        }
+      );
 
       transporter.sendMail({
         from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
         to: `${user.nome} <${user.email}>`,
-        subject: 'Tentativa de Login',
-        html: emailContent,
+        subject: "Tentativa de Login",
+        html,
       });
 
-      const { senha: _, ...loggedUser } = user;
+      const token = jwt_token_user.sign({ id: user.id });
 
-      const token = jwt.sign(
-        { id: user.id },
-        process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRES_IN }
-      );
-
-      return res.json({ usuario: loggedUser, token });
-
+      return res.status(200).json({
+        usuario: {
+          id: user.id,
+          nome: user.nome,
+          email: user.email,
+        },
+        token,
+      });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
       return res.status(500).json({ mensagem: "Erro interno do servidor" });
     }
   },
