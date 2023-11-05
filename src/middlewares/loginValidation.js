@@ -13,6 +13,6 @@ module.exports = async function (req, res, next) {
   if (!user) {
     return res.status(401).json({ mensagem: "Usuário e/ou senha inválido(s)" });
   }
-  req.user = user;
+  req.userId = user.id;
   next();
 };

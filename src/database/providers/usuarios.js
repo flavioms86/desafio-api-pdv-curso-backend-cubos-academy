@@ -10,6 +10,11 @@ const verifyUserProvider = async (email) => {
   }
 };
 
+const getUserById = async (id) => {
+  const result = await Knex("usuarios").where({ id }).first();
+  return result;
+};
+
 const createUserProvider = async (nome, email, senha) => {
   const result = await Knex("usuarios")
     .insert({ nome, email, senha })
@@ -30,6 +35,7 @@ const updateUserProvider = async (id, nome, email, senha) => {
 
 module.exports = {
   verifyUserProvider,
+  getUserById,
   createUserProvider,
   updateUserProvider,
 };
