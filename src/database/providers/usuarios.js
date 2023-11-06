@@ -14,7 +14,9 @@ const createUserProvider = async (nome, email, senha) => {
   const result = await Knex("usuarios")
     .insert({ nome, email, senha })
     .returning("*");
-  return result;
+
+  const { senha: _, ...userRegistered } = result[0];
+  return userRegistered;
 };
 
 const updateUserProvider = async (id, nome, email, senha) => {
