@@ -1,13 +1,35 @@
 const jwt_token_user = require("../utils/jwt/jwt_token_user");
 const bcrypt = require("bcrypt");
 const transporter = require("../utils/email_notifications/email_connection");
-const { 
-  createUserProvider, 
+const {
+  createUserProvider,
   updateUserProvider,
   verifyUserProvider,
   getUserById,
 } = require("../database/providers/usuarios");
-const { htmlCompiler } = require("../utils/email_notifications/compilation_html");
+const {
+  htmlCompiler,
+} = require("../utils/email_notifications/compilation_html");
+
+const registerUser = async (req, res) => {
+  const { nome, email, senha } = req.body;
+
+  try {
+    const verifyUser = await verifyUserProvider(email);
+
+    if (verifyUser) {
+      return res.status(404).json({ mensagem: "O email informado já existe." });
+    }
+
+    const encryptedPass = await bcrypt.hash(senha, 10);
+
+    const user = await createUserProvider(nome, email, encryptedPass);
+
+    return res.status(201).json(user);
+  } catch (error) {
+    return res.status(500).json({ mensagem: "Erro interno no servidor." });
+  }
+};
 
 const userLogin = async (req, res) => {
   const { email, senha } = req.body;
@@ -16,13 +38,17 @@ const userLogin = async (req, res) => {
     const user = await verifyUserProvider(email);
 
     if (!user) {
-      return res.status(401).json({ message: "Email e/ou senha inválido(s)." });
+      return res
+        .status(401)
+        .json({ mensagem: "Email e/ou senha inválido(s)." });
     }
 
     const correctPassword = await bcrypt.compare(senha, user.senha);
 
     if (!correctPassword) {
-      return res.status(401).json({ message: "Email e/ou senha inválido(s)." });
+      return res
+        .status(401)
+        .json({ mensagem: "Email e/ou senha inválido(s)." });
     }
 
     const html = await htmlCompiler(
@@ -51,7 +77,7 @@ const userLogin = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ mensagem: "Erro interno do servidor" });
+    return res.status(500).json({ mensagem: "Erro interno do servidor." });
   }
 };
 
@@ -64,52 +90,31 @@ const userDetails = async (req, res) => {
       email: user.email,
     });
   } catch (error) {
-    return res.status(500).json({ mensgem: "Erro interno" });
-  }
-}
-
-const registerUser = async (req, res) => {
-  const { nome, email, senha } = req.body;
-
-  try {
-    const userFound = await verifyUserProvider(email);
-
-    if (userFound) {
-      return res.status(404).json({ mensagem: "O email já existe" });
-    }
-
-    const encryptedPass = await bcrypt.hash(senha, 10);
-
-    const user = await createUserProvider(nome, email, encryptedPass);
-
-    return res.status(201).json(user);
-  } catch (error) {
-    return res.status(500).json({ mensagem: "Erro interno no servidor!!" });
+    return res.status(500).json({ mensagem: "Erro interno do servidor." });
   }
 };
 
 const updateUser = async (req, res) => {
   const { nome, email, senha } = req.body;
-  const { id } = req.user;
+  const id = req.userId;
 
   try {
-    const userFound = await verifyUserProvider(email);
+    const verifyUser = await verifyUserProvider(email);
 
-    if (!userFound) {
-      return res.status(404).json({ mensagem: "Usuario não encontrado" });
-    }
-
-    const encryptedPass = await bcrypt.hash(senha, 10);
-
-    if (email !== req.user.email) {
-      const existingUserEmail = await verifyUserProvider(email);
-
-      if (existingUserEmail) {
-        return res.status(400).json({ mensagem: "O Email já existe." });
+    if (verifyUser === 0) {
+      const encryptedPass = await bcrypt.hash(senha, 10);
+      await updateUserProvider(id, nome, email, encryptedPass);
+    } else if (verifyUser != 0) {
+      if (id === verifyUser.id) {
+        const encryptedPass = await bcrypt.hash(senha, 10);
+        await updateUserProvider(id, nome, email, encryptedPass);
+      } else {
+        return res.status(400).json({
+          mensagem:
+            "O e-mail informado já está sendo utilizado por outro usuário.",
+        });
       }
     }
-
-    await updateUserProvider(id, nome, email, encryptedPass);
 
     return res.status(204).send();
   } catch (error) {
