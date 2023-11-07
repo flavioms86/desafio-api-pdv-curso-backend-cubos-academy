@@ -1,3 +1,4 @@
+const { registerUser, updateProfileUser } = require("../controllers/usuarios");
 const getAll = require("../controllers/categorias");
 const testAPI = require("../controllers/testAPI");
 const { userLogin, userDetails } = require("../controllers/usuarios");
@@ -13,5 +14,15 @@ router.get("/categoria", getAll);
 
 router.use(authenticateUser);
 router.get("/usuario", userDetails);
+router.post("/usuario", validateUserSchema, registerUser)
+//router.post("/login", validateUserSchema, userLogin);
+router.put("/usuario", updateProfileUser)
+
+//router.use(authenticateUser);
+
+router.get("/categoria", getAll);
+
+
+
 
 module.exports = router;

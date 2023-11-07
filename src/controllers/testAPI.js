@@ -1,5 +1,6 @@
 const testAPI = (req, res) => {
-  return res.json("Tudo ok");
-};
+    return res.json("Tudo ok");
+  };
 
-module.exports = testAPI;
+  
+  module.exports = testAPI
