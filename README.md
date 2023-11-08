@@ -59,6 +59,28 @@ EMAIL_NAME= (nome do remetente do email).
 EMAIL_FROM= (email do remetente).
 ```
 
+As variáveis relacionadas ao banco de dados não precisam ser configuradas para uso na máquina local, pois será utilizado o banco de dados leve SQlite3, gerenciado pelo próprio knex. 
+Mas se for fazer o deploy as mesmas devem ser configuradas:
+
+```
+DB_HOST= (endereço do banco de dados).
+DB_USER= (usuário).
+DB_NAME= (nome do usuário).
+DB_PASS= (senha do banco de dados).
+DB_PORT= (porta de conexão)
+```
+
+Obs.: As variáveis de ambiente devem ser configuradas no arquivo .env em ambiente local e em deploy, devem ser configuradas nas configurações da aplicação no painel do provedor.
+
+Antes de executar o servidor na máquina local, primeiro faça as migrations e execute os seeds para popular o banco com os seguintes comandos:
+
+```
+npm run knex:migrate-latest
+
+npm run knex:seed-run
+```
+
+Os comandos do knex para fazer as migrations e o seed são executadas automaticamente quando em deploy, lembrando que a variável de ambiente IS_LOCALHOST deverá ser false e a NODE_ENV em production.
 
 Para iniciar o servidor, basta executar o nodemon (para não precisar restartar o servidor depois de alguma alteração):
 
