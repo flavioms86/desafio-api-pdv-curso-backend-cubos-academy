@@ -106,6 +106,75 @@ localhost:3000
 
 ## **Endpoints**
 
+### **Cadastrar usuário**
+
+#### `POST` `/usuario`
+
+#### **Exemplo de requisição**
+
+```javascript
+// POST /usuario
+{
+    "nome": "José",
+    "email": "jose@email.com",
+    "senha": "123456"
+}
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+    "id": 1,
+    "nome": "José",
+    "email": "jose@email.com"
+}
+```
+
+### **Login do usuário**
+
+#### `POST` `/login`
+
+
+#### **Exemplo de requisição**
+
+```javascript
+// POST /login
+{
+    "email": "jose@email.com",
+    "senha": "123456"
+}
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+    "usuario": {
+        "id": 1,
+        "nome": "José",
+        "email": "jose@email.com"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjIzMjQ5NjIxLCJleHAiOjE2MjMyNzg0MjF9.KLR9t7m_JQJfpuRv9_8H2-XJ92TSjKhGPxJXVfX6wBI"
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+    "mensagem": "Usuário e/ou senha inválido(s)."
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+    "mensagem": "O campo senha é obrigatório."
+}
+```
+
 
 <summary><b>Listar categorias</b></summary>
 
