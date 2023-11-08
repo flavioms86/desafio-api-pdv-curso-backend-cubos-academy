@@ -5,7 +5,7 @@ const userRegister = joi.object({
     .string()
     .required()
     .min(3)
-    .pattern(/^[A-Za-zÀ-ÿ]+$/)
+    .pattern(/^[A-Za-zÀ-ÿ\s]+$/)
     .messages({
       "any.required": "O campo nome é obrigatório",
       "string.base": "O campo nome deve ser do tipo string",
