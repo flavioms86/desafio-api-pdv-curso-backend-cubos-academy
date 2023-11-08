@@ -175,116 +175,126 @@ localhost:3000
 }
 ```
 
-
-<summary><b>Listar categorias</b></summary>
-
-#### `GET` `/categoria`
-
-Essa é a rota que será chamada quando o usuário quiser listar todas as categorias cadastradas.
-
-As categorias a seguir precisam ser previamente cadastradas para que sejam listadas no endpoint de listagem das categorias.
-
-## **Categorias**
-
--   Informática
--   Celulares
--   Beleza e Perfumaria
--   Mercado
--   Livros e Papelaria
--   Brinquedos
--   Moda
--   Bebê
--   Games
-
-</details>
-
-<details>
-<summary><b>Cadastrar usuário</b></summary>
-
-#### `POST` `/usuario`
-
-Essa é a rota que será utilizada para cadastrar um novo usuário no sistema.
-
-Critérios de aceite:
-
-    - Validar os campos obrigatórios: 
-        - nome
-        - email
-        - senha
-    - A senha deve ser criptografada utilizando algum algoritmo de criptografia confiável.
-    - O campo e-mail no banco de dados deve ser único para cada registro, não permitindo dois usuários possuírem o mesmo e-mail.
-
-</details>
-
-<details>
-<summary><b>Efetuar login do usuário</b></summary>
-
-#### `POST` `/login`
-
-Essa é a rota que permite o usuário cadastrado realizar o login no sistema.
-
-Critérios de aceite:
-
-    - Validar se o e-mail e a senha estão corretos para o usuário em questão.
-    - Gerar um token de autenticação para o usuário.
-
-</details>
-
----
-
-## **ATENÇÃO**: Todas as funcionalidades (endpoints) a seguir, a partir desse ponto, deverão exigir o token de autenticação do usuário logado, recebendo no header com o formato Bearer Token. Portanto, em cada funcionalidade será necessário validar o token informado.
-
----
-
-<details>
-<summary><b>Detalhar perfil do usuário logado</b></summary>
+### **Detalhar usuário**
 
 #### `GET` `/usuario`
 
-Essa é a rota que permite o usuário logado a visualizar os dados do seu próprio perfil, de acordo com a validação do token de autenticação.
+#### **Exemplo de requisição**
 
-</details>
+```javascript
+// GET /usuario
+// Sem conteúdo no corpo (body) da requisição
+```
 
-<details>
-<summary><b>Editar perfil do usuário logado</b></summary>
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+    "id": 1,
+    "nome": "José",
+    "email": "jose@email.com"
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+    "mensagem": "O token deve ser informado."
+}
+```
+
+### **Atualizar usuário**
 
 #### `PUT` `/usuario`
 
-Essa é a rota que permite o usuário logado atualizar informações de seu próprio cadastro, de acordo com a validação do token de autenticação.
+#### **Exemplo de requisição**
 
-Critérios de aceite:
+```javascript
+// PUT /usuario
+{
+    "nome": "José de Abreu",
+    "email": "jose_abreu@email.com",
+    "senha": "j4321"
+}
+```
 
-    - Validar os campos obrigatórios: 
-        - nome
-        - email
-        - senha
-    - A senha deve ser criptografada utilizando algum algoritmo de criptografia confiável.
-    - O campo e-mail no banco de dados deve ser único para cada registro, não permitindo dois usuários possuírem o mesmo e-mail.
+#### **Exemplos de resposta**
 
-</details>
+```javascript
+// HTTP Status 200 / 201 / 204
+// Sem conteúdo no corpo (body) da resposta
+```
 
-<details>
-<summary><b>Efetuar deploy da aplicação</b></summary>
-<br>
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+    "mensagem": "O e-mail informado já está sendo utilizado por outro usuário."
+}
+```
 
-Fazer deploy do projeto e disponibilizar a URL.
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+    "mensagem": "O campo email é obrigatório."
+}
+```
 
-</details>
+### **Listar categorias**
 
-</details>
+#### `GET` `/categoria`
+
+#### **Exemplo de requisição**
+
+```javascript
+// GET /categoria
+// Sem conteúdo no corpo (body) da requisição
+```
+
+#### **Exemplos de resposta**
+
+Obs.: Retorno resumido para fins de demonstração):
+
+```javascript
+// HTTP Status 200 / 201 / 204
+[
+  {
+    id: 1,
+    descricao: "Informática",
+  },
+  {
+    id: 2,
+    descricao: "Celulares",
+  },
+...
+];
+```
+
+Novos endpoints serão adicionado nas próximas sprints.
 
 ---
+### ⌨️ Ajustes e melhorias
 
+O projeto poderá ter novos recursos e melhorias como:
 
-## Aulas úteis:
+- [ ] Nova tarefa a ser definida.
+- [ ] Nova tarefa a ser definida.
+- [ ] Nova tarefa a ser definida.
 
--   [Revisão pt1](https://aulas.cubos.academy/turma/1e4b0f04-1795-4b02-a19f-83e221b2ba4e/aulas/e4e0b794-91a2-42a3-9a03-137c20fcb350)
--   [Revisão pt2](https://aulas.cubos.academy/turma/1e4b0f04-1795-4b02-a19f-83e221b2ba4e/aulas/0648b3e8-55cb-4bf8-b425-00e9b213fd00)
--   [Git e fluxo de trabalho em equipe](https://aulas.cubos.academy/turma/1e4b0f04-1795-4b02-a19f-83e221b2ba4e/aulas/cd27aa06-f5d2-4448-9cac-48b563f6117d)
--   [Deploy](https://aulas.cubos.academy/turma/1e4b0f04-1795-4b02-a19f-83e221b2ba4e/aulas/f3cb34a7-8e87-4ea1-830e-ef089f851aa6)
--   [Envio de e-mails](https://aulas.cubos.academy/turma/1e4b0f04-1795-4b02-a19f-83e221b2ba4e/aulas/f5d73a28-cce3-429c-9488-51b453f20e37)
--   [Validações e boas práticas](https://aulas.cubos.academy/turma/1e4b0f04-1795-4b02-a19f-83e221b2ba4e/aulas/150b1f0b-735f-413b-870f-864ecae8a8bc)
--   [Upload de arquivos](https://aulas.cubos.academy/turma/1e4b0f04-1795-4b02-a19f-83e221b2ba4e/aulas/ad6993d5-c47d-4971-a86f-c7e41a93b6cd)
+## 🛠️ Construído com
 
+Ferramentas utilizadas no desenvolvimento do projeto.
 
-###### tags: `back-end` `módulo 5` `nodeJS` `PostgreSQL` `API REST` `desafio`
+* [Node.js](https://nodejs.org/en) - Javascript runtime environment
+* [Express](https://expressjs.com/pt-br/) - Framework para aplicação Web do Node.js
+
+## ✒️ Autores
+
+* **Everton Silva** - *Projeto Curso Backend da Cubos Academy - M05* - [silvaevertondev](https://github.com/silvaevertondev)
+* **Flávio M. Silva** - *Projeto Curso Backend da Cubos Academy - M05* - [flavioms86](https://github.com/flavioms86)
+* **Jean Jesus** - *Projeto Curso Backend da Cubos Academy - M05* - [JeanNewb](https://github.com/JeanNewb)
+* **Luiz Felipe Reis** - *Projeto Curso Backend da Cubos Academy - M05* - [DevFelipreis](https://github.com/DevFelipreis)
+
+## 📄 Licença
+
+Não se aplica.
