@@ -36,7 +36,7 @@ VALUES
 CREATE TABLE produtos (
     id SERIAL PRIMARY KEY,
     descricao TEXT NOT NULL,
-    quantidade_estoque TEXT NOT NULL,
+    quantidade_estoque NUMERIC NOT NULL,
     valor NUMERIC NOT NULL,
     categoria_id INTEGER REFERENCES categorias(id)
 );
