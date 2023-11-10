@@ -32,3 +32,24 @@ VALUES
 ('Moda'),
 ('Bebê'),
 ('Games');
+
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    descricao TEXT NOT NULL,
+    quantidade_estoque TEXT NOT NULL,
+    valor NUMERIC NOT NULL,
+    categoria_id INTEGER REFERENCES categorias(id)
+);
+
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    cpf TEXT UNIQUE NOT NULL,
+    cep TEXT NULL,
+    rua TEXT NULL,
+    numero TEXT NULL,
+    bairro TEXT NULL,
+    cidade TEXT NULL,
+    estado TEXT NULL
+);
