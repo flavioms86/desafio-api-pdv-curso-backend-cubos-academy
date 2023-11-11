@@ -15,6 +15,7 @@ router.get("/usuario", controlador.getUser);
 router.put("/usuario", bodyValidation(joiSchemas.userRegister), controlador.updateUser);
 
 router.post("/produto", bodyValidation(joiSchemas.productsRegister), controlador.registerProducts);
+router.post("/produto/:id", bodyValidation(joiSchemas.productsRegister), controlador.registerProducts);
 
 
 module.exports = router;
