@@ -1,5 +1,6 @@
 const getAllprovider = require("./categorias");
 const { createUserProvider, getUserById, updateUserProvider, verifyUserProvider } = require("./usuarios");
+const { verifyProductsProvider, createProductProvider } = require("./produtos");
 
 module.exports = {
   getAllprovider,
@@ -7,4 +8,6 @@ module.exports = {
   getUserById,
   updateUserProvider,
   verifyUserProvider,
+  createProductProvider,
+  verifyProductsProvider
 };
