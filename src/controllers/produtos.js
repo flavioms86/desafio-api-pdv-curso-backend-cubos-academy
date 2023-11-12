@@ -6,7 +6,7 @@ const registerProducts = async (req, res) => {
 
     try {
         const verifyCategoria = await provider.verifyProductsProvider(categoria_id);
-        const verifyProduct = await provider.verifyProductsUpdateProvider(id);
+        const verifyProduct = await provider.verifyProductsIdProvider(id);
 
         if (!verifyCategoria) {
             return res.status(404).json({ mensagem: "O id da categoria informada não existe." });
@@ -27,7 +27,7 @@ const updateProducts = async (req, res) => {
 
     try {
         const verifyCategoria = await provider.verifyProductsProvider(categoria_id);
-        const verifyProduct = await provider.verifyProductsUpdateProvider(id);
+        const verifyProduct = await provider.verifyProductsIdProvider(id);
 
         if (!verifyCategoria) {
             return res.status(404).json({ mensagem: "O id da categoria informada não existe." });
@@ -44,7 +44,24 @@ const updateProducts = async (req, res) => {
 };
 
 
+const deleteProducts = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const verifyProduct = await provider.verifyProductsIdProvider(id);
+
+        if (!verifyProduct) {
+            return res.status(404).json({ mensagem: "O id do produto informado não existe." });
+        }
+        const result = await provider.deleteProductProvider(id);
+        return res.status(200).json();
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ mensagem: "Erro interno no servidor." });
+    }
+};
 module.exports = {
     registerProducts,
-    updateProducts
+    updateProducts,
+    deleteProducts
 };
