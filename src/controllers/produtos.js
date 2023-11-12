@@ -56,7 +56,6 @@ const deleteProducts = async (req, res) => {
         const result = await provider.deleteProductProvider(id);
         return res.status(200).json();
     } catch (error) {
-        console.log(error.message);
         return res.status(500).json({ mensagem: "Erro interno no servidor." });
     }
 };
