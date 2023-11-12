@@ -1,6 +1,6 @@
 const getAll = require("./categorias");
 const { getUser, loginUser, registerUser, updateUser } = require("./usuarios");
-const { registerProducts } = require("./produtos");
+const { registerProducts, updateProducts } = require("./produtos");
 
 module.exports = {
   getAll,
@@ -8,5 +8,6 @@ module.exports = {
   loginUser,
   registerUser,
   updateUser,
-  registerProducts
+  registerProducts,
+  updateProducts
 };
