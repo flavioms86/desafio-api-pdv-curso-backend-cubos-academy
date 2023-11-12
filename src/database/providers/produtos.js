@@ -29,11 +29,10 @@ const createProductProvider = async (descricao, quantidade_estoque, valor, categ
     return productsRegistered;
 };
 
-const updateProductProvider = async (descricao, quantidade_estoque, valor, categoria_id) => {
-    const { id } = req.params;
+const updateProductProvider = async (id, descricao, quantidade_estoque, valor, categoria_id) => {
     const result = await Knex("produtos")
         .update({ descricao, quantidade_estoque, valor, categoria_id })
-        .where({ id })
+        .where({ id: id })
         .returning("*");
 
     const productsRegistered = result[0];
