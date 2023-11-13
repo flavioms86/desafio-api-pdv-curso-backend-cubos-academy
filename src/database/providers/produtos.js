@@ -10,7 +10,7 @@ const verifyProductsProvider = async (id) => {
   }
 };
 
-const verifyProductsUpdateProvider = async (id) => {
+const verifyProductsIdProvider = async (id) => {
   const result = await Knex("produtos").where({ id }).first();
 
   if (result) {
@@ -48,9 +48,20 @@ const updateProductProvider = async (
   return result[0];
 };
 
+const deleteProductProvider = async (id) => {
+  const result = await Knex("produtos").where({ id }).del();
+
+  if (result) {
+    return result;
+  } else {
+    return 0;
+  }
+};
+
 module.exports = {
   verifyProductsProvider,
   createProductProvider,
   updateProductProvider,
-  verifyProductsUpdateProvider,
+  verifyProductsIdProvider,
+  deleteProductProvider,
 };
