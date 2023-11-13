@@ -14,6 +14,8 @@ router.use(authenticateUser);
 router.get("/usuario", controlador.getUser);
 router.put("/usuario", bodyValidation(joiSchemas.userRegister), controlador.updateUser);
 
+router.post("/cliente", bodyValidation(joiSchemas.clientRegister), controlador.registerClient)
+
 router.post("/produto", bodyValidation(joiSchemas.productsRegister), controlador.registerProducts);
 router.put("/produto/:id", bodyValidation(joiSchemas.productsRegister), controlador.updateProducts);
 router.delete("/produto/:id", controlador.deleteProducts);
