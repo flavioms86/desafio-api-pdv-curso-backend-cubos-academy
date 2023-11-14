@@ -62,7 +62,7 @@ const updateClientProvider = async (
 ) => {
   const result = await Knex("clientes")
     .update({ nome, email, cpf, cep, rua, numero, bairro, cidade, estado })
-    .where({ id: id })
+    .where({ id })
     .returning("*");
 
   return result[0];

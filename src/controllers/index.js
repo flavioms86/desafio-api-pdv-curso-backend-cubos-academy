@@ -1,7 +1,7 @@
 const getAllcategory = require("./categorias");
 const { getUser, loginUser, registerUser, updateUser } = require("./usuarios");
 const { registerProducts, updateProducts, deleteProducts } = require("./produtos");
-const { registerClient } = require("./clientes");
+const { registerClient,updateClient } = require("./clientes");
 
 module.exports = {
   getAllcategory,
@@ -10,6 +10,7 @@ module.exports = {
   registerUser,
   updateUser,
   registerClient,
+  updateClient,
   registerProducts,
   updateProducts,
   deleteProducts,

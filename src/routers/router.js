@@ -5,7 +5,11 @@ const joiSchemas = require("../utils/joi_schemas");
 
 const router = require("express").Router();
 
-router.post("/login", bodyValidation(joiSchemas.userLogin), controlador.loginUser);
+router.post(
+  "/login",
+  bodyValidation(joiSchemas.userLogin),
+  controlador.loginUser
+);
 router.post(
   "/usuario",
   bodyValidation(joiSchemas.userRegister),
@@ -26,6 +30,12 @@ router.post(
   "/cliente",
   bodyValidation(joiSchemas.clientRegister),
   controlador.registerClient
+);
+
+router.put(
+  "/cliente/:id",
+  bodyValidation(joiSchemas.clientRegister),
+  controlador.updateClient
 );
 
 router.post(
