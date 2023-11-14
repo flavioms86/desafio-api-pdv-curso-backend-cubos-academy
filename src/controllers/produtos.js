@@ -4,7 +4,7 @@ const registerProducts = async (req, res) => {
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
   try {
-    const verifyCategory = await provider.verifyProductsProvider(categoria_id);
+    const verifyCategory = await provider.verifyCategoryProvider(categoria_id);
 
     if (!verifyCategory) {
       return res
@@ -19,6 +19,7 @@ const registerProducts = async (req, res) => {
     );
     return res.status(201).json(product);
   } catch (error) {
+    console.log(error.message);
     return res.status(500).json({ mensagem: "Erro interno no servidor." });
   }
 };
@@ -28,7 +29,7 @@ const updateProducts = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const verifyCategoria = await provider.verifyProductsProvider(categoria_id);
+    const verifyCategoria = await provider.verifyCategoryProvider(categoria_id);
     const verifyProduct = await provider.verifyProductsIdProvider(id);
 
     if (!verifyCategoria) {

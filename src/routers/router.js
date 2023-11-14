@@ -6,19 +6,38 @@ const joiSchemas = require("../utils/joi_schemas");
 const router = require("express").Router();
 
 router.post("/login", bodyValidation(joiSchemas.userLogin), controlador.loginUser);
-router.post("/usuario", bodyValidation(joiSchemas.userRegister), controlador.registerUser);
-router.get("/categoria", controlador.getAll);
+router.post(
+  "/usuario",
+  bodyValidation(joiSchemas.userRegister),
+  controlador.registerUser
+);
+router.get("/categoria", controlador.getAllcategory);
 
 router.use(authenticateUser);
 
 router.get("/usuario", controlador.getUser);
-router.put("/usuario", bodyValidation(joiSchemas.userRegister), controlador.updateUser);
+router.put(
+  "/usuario",
+  bodyValidation(joiSchemas.userRegister),
+  controlador.updateUser
+);
 
-router.post("/cliente", bodyValidation(joiSchemas.clientRegister), controlador.registerClient)
+router.post(
+  "/cliente",
+  bodyValidation(joiSchemas.clientRegister),
+  controlador.registerClient
+);
 
-router.post("/produto", bodyValidation(joiSchemas.productsRegister), controlador.registerProducts);
-router.put("/produto/:id", bodyValidation(joiSchemas.productsRegister), controlador.updateProducts);
+router.post(
+  "/produto",
+  bodyValidation(joiSchemas.productsRegister),
+  controlador.registerProducts
+);
+router.put(
+  "/produto/:id",
+  bodyValidation(joiSchemas.productsRegister),
+  controlador.updateProducts
+);
 router.delete("/produto/:id", controlador.deleteProducts);
-
 
 module.exports = router;

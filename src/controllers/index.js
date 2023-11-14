@@ -1,17 +1,16 @@
-const getAll = require("./categorias");
+const getAllcategory = require("./categorias");
 const { getUser, loginUser, registerUser, updateUser } = require("./usuarios");
 const { registerProducts, updateProducts, deleteProducts } = require("./produtos");
-const { registerClient, updateClient } = require("./clientes")
+const { registerClient } = require("./clientes");
 
 module.exports = {
-  getAll,
+  getAllcategory,
   getUser,
   loginUser,
   registerUser,
   updateUser,
   registerClient,
-  updateClient,
   registerProducts,
   updateProducts,
-  deleteProducts
+  deleteProducts,
 };

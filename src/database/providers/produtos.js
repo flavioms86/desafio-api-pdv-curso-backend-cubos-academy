@@ -1,15 +1,5 @@
 const Knex = require("../knex/index");
 
-const verifyProductsProvider = async (id) => {
-  const result = await Knex("categorias").where({ id }).first();
-
-  if (result) {
-    return result;
-  } else {
-    return 0;
-  }
-};
-
 const verifyProductsIdProvider = async (id) => {
   const result = await Knex("produtos").where({ id }).first();
 
@@ -59,7 +49,6 @@ const deleteProductProvider = async (id) => {
 };
 
 module.exports = {
-  verifyProductsProvider,
   createProductProvider,
   updateProductProvider,
   verifyProductsIdProvider,

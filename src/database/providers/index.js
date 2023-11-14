@@ -1,7 +1,23 @@
-const getAllprovider = require("./categorias");
-const { createUserProvider, getUserById, updateUserProvider, verifyUserProvider } = require("./usuarios");
-const { verifyProductsProvider, createProductProvider, updateProductProvider, verifyProductsIdProvider, deleteProductProvider } = require("./produtos");
-const { verifyClientsProvider, verifyClientEmail, verifyClientCPF, createClientProvider, updateClientProvider } = require ("./clientes")
+const { getAllprovider, verifyCategoryProvider } = require("./categorias");
+const {
+  createUserProvider,
+  getUserById,
+  updateUserProvider,
+  verifyUserProvider,
+} = require("./usuarios");
+const {
+  createProductProvider,
+  updateProductProvider,
+  verifyProductsIdProvider,
+  deleteProductProvider,
+} = require("./produtos");
+const {
+  verifyClientsProvider,
+  verifyClientEmail,
+  verifyClientCPF,
+  createClientProvider,
+  updateClientProvider,
+} = require("./clientes");
 
 module.exports = {
   getAllprovider,
@@ -15,8 +31,8 @@ module.exports = {
   createClientProvider,
   updateClientProvider,
   createProductProvider,
-  verifyProductsProvider,
+  verifyCategoryProvider,
   updateProductProvider,
   verifyProductsIdProvider,
-  deleteProductProvider
+  deleteProductProvider,
 };
