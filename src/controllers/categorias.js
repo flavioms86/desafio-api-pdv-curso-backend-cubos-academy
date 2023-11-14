@@ -5,7 +5,6 @@ const getAllcategory = async (req, res) => {
     const result = await providers.getAllprovider();
     return res.status(200).json(result);
   } catch (error) {
-    console.log(error.message);
     return res.status(500).json({ mensagem: "Erro ao consultar os registros." });
   }
 };

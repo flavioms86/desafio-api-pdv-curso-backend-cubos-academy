@@ -19,7 +19,6 @@ const registerProducts = async (req, res) => {
     );
     return res.status(201).json(product);
   } catch (error) {
-    console.log(error.message);
     return res.status(500).json({ mensagem: "Erro interno no servidor." });
   }
 };
