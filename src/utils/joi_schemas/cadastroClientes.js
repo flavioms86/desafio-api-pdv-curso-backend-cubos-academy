@@ -31,11 +31,17 @@ const clientRegister = joi.object({
     .pattern(/^\d{5}-\d{3}$/)
     .optional()
     .messages({
+      "string.base": "O campo cep deve ser do tipo string",
       "string.length": "O campo cep deve ter 9 caracteres no formato '00000-000'.",
       "string.pattern.base": "O campo cep deve ser no formato '00000-000'.",
     }),
   rua: joi.string().max(60).optional().messages({
+    "string.base": "O campo rua deve ser do tipo string",
     "string.length": "O campo rua deve ter no máximo 60 caracteres.",
+  }),
+  numero: joi.string().max(10).optional().messages({
+    "string.base": "O campo numero deve ser do tipo string",
+    "string.max": "O campo numero deve ter no máximo 10 caracteres.",
   }),
 });
 
