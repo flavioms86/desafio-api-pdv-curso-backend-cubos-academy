@@ -1,4 +1,5 @@
 const { getAllprovider, verifyCategoryProvider } = require("./categorias");
+
 const {
   createUserProvider,
   getUserById,
@@ -10,6 +11,8 @@ const {
   updateProductProvider,
   verifyProductsIdProvider,
   deleteProductProvider,
+  getAllProducts,
+  getAllProductsAndCategory,
 } = require("./produtos");
 const {
   verifyClientsProvider,
@@ -35,4 +38,6 @@ module.exports = {
   updateProductProvider,
   verifyProductsIdProvider,
   deleteProductProvider,
+  getAllProducts,
+  getAllProductsAndCategory,
 };

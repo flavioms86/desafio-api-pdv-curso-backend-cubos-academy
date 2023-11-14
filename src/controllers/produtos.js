@@ -72,8 +72,26 @@ const deleteProducts = async (req, res) => {
     return res.status(500).json({ mensagem: "Erro interno no servidor." });
   }
 };
+
+const getProducts = async (req, res) => {
+  const { categoria_id } = req.query;
+
+  try {
+    if (categoria_id) {
+      const products = await provider.getAllProductsAndCategory(categoria_id);
+      return res.status(200).json(products);
+    }
+
+    const productWithoutFilter = await provider.getAllProducts();
+    return res.status(200).json(productWithoutFilter);
+  } catch (error) {
+    return res.status(500).json({ mensagem: "Erro interno no servidor." });
+  }
+};
+
 module.exports = {
   registerProducts,
   updateProducts,
   deleteProducts,
+  getProducts,
 };

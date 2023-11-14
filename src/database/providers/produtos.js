@@ -48,9 +48,21 @@ const deleteProductProvider = async (id) => {
   }
 };
 
+const getAllProducts = async () => {
+  const result = await Knex("produtos");
+  return result;
+};
+
+const getAllProductsAndCategory = async (categoria_id) => {
+  const result = await Knex("produtos").where({ categoria_id });
+  return result;
+};
+
 module.exports = {
   createProductProvider,
   updateProductProvider,
   verifyProductsIdProvider,
   deleteProductProvider,
+  getAllProducts,
+  getAllProductsAndCategory,
 };
