@@ -18,7 +18,7 @@ const verifyClientEmail = async (email) => {
   } else {
     return 0;
   }
-}
+};
 
 const verifyClientCPF = async (cpf) => {
   const result = await Knex("clientes").where({ cpf }).first();
@@ -28,16 +28,21 @@ const verifyClientCPF = async (cpf) => {
   } else {
     return 0;
   }
-}
+};
 
 const createClientProvider = async (
   nome,
   email,
-  cpf
-) => {  
-
+  cpf,
+  cep,
+  rua,
+  numero,
+  bairro,
+  cidade,
+  estado
+) => {
   const result = await Knex("clientes")
-    .insert({ nome, email, cpf })
+    .insert({ nome, email, cpf, cep, rua, numero, bairro, cidade, estado })
     .returning("*");
 
   return result[0];
@@ -47,22 +52,26 @@ const updateClientProvider = async (
   id,
   nome,
   email,
-  cpf
+  cpf,
+  cep,
+  rua,
+  numero,
+  bairro,
+  cidade,
+  estado
 ) => {
   const result = await Knex("clientes")
-    .update({ nome, email, cpf })
+    .update({ nome, email, cpf, cep, rua, numero, bairro, cidade, estado })
     .where({ id: id })
     .returning("*");
 
   return result[0];
 };
 
-
-
 module.exports = {
   verifyClientsProvider,
   createClientProvider,
   updateClientProvider,
   verifyClientEmail,
-  verifyClientCPF
+  verifyClientCPF,
 };
