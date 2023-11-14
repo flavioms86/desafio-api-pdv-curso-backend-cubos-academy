@@ -90,6 +90,7 @@ const getProducts = async (req, res) => {
     return res.status(500).json({ mensagem: "Erro interno no servidor."});
   }
 }
+
 module.exports = {
   registerProducts,
   updateProducts,
