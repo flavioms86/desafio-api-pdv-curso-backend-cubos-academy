@@ -74,26 +74,24 @@ const deleteProducts = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-  const categoria_id  = req.query;
+  const { categoria_id } = req.query;
 
   try {
-    const productFilter = await provider.verifyProductsIdProvider(categoria_id);
-    const productWithoutFilter = await provider.getProducts();  
-
-    if (!categoria_id) {
-      return res
-      .status(201)
-      .json(productWithoutFilter);
+    if (categoria_id) {
+      const products = await provider.getAllProductsAndCategory(categoria_id);
+      return res.status(200).json(products);
     }
-      return res.status(201).json(productFilter);
+
+    const productWithoutFilter = await provider.getAllProducts();
+    return res.status(200).json(productWithoutFilter);
   } catch (error) {
-    return res.status(500).json({ mensagem: "Erro interno no servidor."});
+    return res.status(500).json({ mensagem: "Erro interno no servidor." });
   }
-}
+};
 
 module.exports = {
   registerProducts,
   updateProducts,
   deleteProducts,
-  getProducts
+  getProducts,
 };
