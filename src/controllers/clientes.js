@@ -1,8 +1,7 @@
 const provider = require("../database/providers");
 
 const registerClient = async (req, res) => {
-  const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } =
-    req.body;
+  const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
 
   try {
     const verifyEmail = await provider.verifyClientEmail(email);
@@ -17,7 +16,17 @@ const registerClient = async (req, res) => {
       return res.status(404).json({ mensagem: "O CPF informado já existe." });
     }
 
-    const client = await provider.createClientProvider(nome, email, cpf);
+    const client = await provider.createClientProvider(
+      nome,
+      email,
+      cpf,
+      cep,
+      rua,
+      numero,
+      bairro,
+      cidade,
+      estado
+    );
     return res.status(201).json(client);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno no servidor." });

@@ -44,8 +44,16 @@ const clientRegister = joi.object({
     "string.max": "O campo numero deve ter no máximo 10 caracteres.",
   }),
   bairro: joi.string().max(60).optional().messages({
-    "string.base": "O campo rua deve ser do tipo string",
-    "string.max": "O campo rua deve ter no máximo 60 caracteres.",
+    "string.base": "O campo bairro deve ser do tipo string",
+    "string.max": "O campo bairro deve ter no máximo 60 caracteres.",
+  }),
+  cidade: joi.string().max(50).optional().messages({
+    "string.base": "O campo cidade deve ser do tipo string",
+    "string.max": "O campo cidade deve ter no máximo 50 caracteres.",
+  }),
+  estado: joi.string().max(15).optional().messages({
+    "string.base": "O campo estado deve ser do tipo string",
+    "string.max": "O campo estado deve ter no máximo 15 caracteres.",
   }),
 });
 
