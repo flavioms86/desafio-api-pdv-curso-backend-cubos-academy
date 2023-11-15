@@ -68,10 +68,16 @@ const updateClientProvider = async (
   return result[0];
 };
 
+const getAllClients = async () => {
+  const result = await Knex("clientes");
+  return result;
+};
+
 module.exports = {
   verifyClientsProvider,
   createClientProvider,
   updateClientProvider,
   verifyClientEmail,
   verifyClientCPF,
+  getAllClients
 };

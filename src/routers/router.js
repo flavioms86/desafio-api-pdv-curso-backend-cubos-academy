@@ -14,8 +14,8 @@ router.use(authenticateUser);
 router.get("/usuario", controlador.getUser);
 router.put("/usuario", bodyValidation(joiSchemas.userRegister), controlador.updateUser);
 
+router.get("/cliente", controlador.getClients);
 router.post("/cliente", bodyValidation(joiSchemas.clientRegister), controlador.registerClient);
-
 router.put(
   "/cliente/:id",
   bodyValidation(joiSchemas.clientRegister),
