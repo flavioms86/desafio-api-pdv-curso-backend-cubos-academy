@@ -41,7 +41,7 @@ const updateClient = async (req, res) => {
     const verifyClient = await provider.verifyClientsProvider(id);
 
     if (!verifyClient) {
-      return res.status(404).json({ mensagem: "O cliente informado não existe." });
+      return res.status(404).json({ mensagem: "Não existe cliente para o id informado." });
     }
 
     const verifyEmail = await provider.verifyClientEmail(email);
@@ -89,7 +89,7 @@ const getDetailClient = async (req, res) => {
     const user = await provider.getClient(id);
 
     if (user.length === 0) {
-      return res.status(404).json({ mensagem: "Não existe cliente para o ID informado." });
+      return res.status(404).json({ mensagem: "Não existe cliente para o id informado." });
     }
     return res.status(200).json(user[0]);
   } catch (error) {

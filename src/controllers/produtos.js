@@ -30,10 +30,10 @@ const updateProducts = async (req, res) => {
     const verifyProduct = await provider.verifyProductsIdProvider(id);
 
     if (!verifyCategoria) {
-      return res.status(404).json({ mensagem: "O id da categoria informada não existe." });
+      return res.status(404).json({ mensagem: "Não existe categoria para o id informado." });
     }
     if (!verifyProduct) {
-      return res.status(404).json({ mensagem: "O id do produto informado não existe." });
+      return res.status(404).json({ mensagem: "Não existe produto para o id informado." });
     }
 
     const product = await provider.updateProductProvider(
@@ -56,7 +56,7 @@ const deleteProducts = async (req, res) => {
     const verifyProduct = await provider.verifyProductsIdProvider(id);
 
     if (!verifyProduct) {
-      return res.status(404).json({ mensagem: "O id do produto informado não existe." });
+      return res.status(404).json({ mensagem: "Não existe produto para o id informado." });
     }
     await provider.deleteProductProvider(id);
     return res.status(204).send();
@@ -88,7 +88,7 @@ const getDetailProduct = async (req, res) => {
     const detailProduct = await provider.getProduct(id);
 
     if (detailProduct.length === 0) {
-      return res.status(404).json({ mensagem: "Não existe produto para a id informado." });
+      return res.status(404).json({ mensagem: "Não existe produto para o id informado." });
     }
     return res.status(200).json(detailProduct[0]);
   } catch (error) {
