@@ -1,7 +1,8 @@
 const provider = require("../database/providers");
 
 const registerClient = async (req, res) => {
-  const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
+  const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } =
+    req.body;
 
   try {
     const verifyEmail = await provider.verifyClientEmail(email);
@@ -34,14 +35,17 @@ const registerClient = async (req, res) => {
 };
 
 const updateClient = async (req, res) => {
-  const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
+  const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } =
+    req.body;
   const { id } = req.params;
 
   try {
     const verifyClient = await provider.verifyClientsProvider(id);
 
     if (!verifyClient) {
-      return res.status(404).json({ mensagem: "O cliente informado não existe." });
+      return res
+        .status(404)
+        .json({ mensagem: "O cliente informado não existe." });
     }
 
     const verifyEmail = await provider.verifyClientEmail(email);
@@ -74,23 +78,36 @@ const updateClient = async (req, res) => {
 };
 
 const getClients = async (req, res) => {
-  const id = req.query;
+  const id = req.params;
   try {
     const user = await provider.getAllClients(id);
 
     if (!id) {
-      return res
-      .status(401)
-      .json({ mensagem: "O id informado não existe." });
+      return res.status(401).json({ mensagem: "O id informado não existe." });
     }
-      return res.status(201).json(user)
+    return res.status(201).json(user);
   } catch (error) {
-    return res.status(500).json({ mensagem: "Erro interno do servidor."});
+    return res.status(500).json({ mensagem: "Erro interno do servidor." });
+  }
+};
+
+const getDetailUser = async (req, res) => {
+  const id = req.params;
+  try {
+    const user = await provider.getAllClients(id);
+
+    if (!id) {
+      return res.status(401).json({ mensagem: "O id informado não existe." });
+    }
+    return res.status(201).json(user);
+  } catch (error) {
+    return res.status(500).json({ mensagem: "Erro interno do servidor." });
   }
 };
 
 module.exports = {
   registerClient,
   updateClient,
-  getClients
+  getClients,
+  getDetailUser,
 };
