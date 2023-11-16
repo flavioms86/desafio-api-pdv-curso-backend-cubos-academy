@@ -20,7 +20,8 @@ const {
   verifyClientCPF,
   createClientProvider,
   updateClientProvider,
-  getAllClients
+  getClient,
+  getAllClients,
 } = require("./clientes");
 
 module.exports = {
@@ -41,5 +42,6 @@ module.exports = {
   deleteProductProvider,
   getAllProducts,
   getAllProductsAndCategory,
-  getAllClients
+  getClient,
+  getAllClients,
 };
