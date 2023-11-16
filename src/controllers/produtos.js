@@ -88,7 +88,7 @@ const getDetailProduct = async (req, res) => {
     const detailProduct = await provider.getProduct(id);
 
     if (detailProduct.length === 0) {
-      return res.status(401).json({ mensagem: "Não existe produto para a id informado." });
+      return res.status(404).json({ mensagem: "Não existe produto para a id informado." });
     }
     return res.status(200).json(detailProduct[0]);
   } catch (error) {

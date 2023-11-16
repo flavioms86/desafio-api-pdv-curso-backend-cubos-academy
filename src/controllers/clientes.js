@@ -89,7 +89,7 @@ const getDetailClient = async (req, res) => {
     const user = await provider.getClient(id);
 
     if (user.length === 0) {
-      return res.status(400).json({ mensagem: "Não existe cliente para o ID informado." });
+      return res.status(404).json({ mensagem: "Não existe cliente para o ID informado." });
     }
     return res.status(200).json(user[0]);
   } catch (error) {
