@@ -6,6 +6,7 @@ const {
   updateProducts,
   deleteProducts,
   getProducts,
+  getDetailProduct,
 } = require("./produtos");
 
 module.exports = {
@@ -20,5 +21,6 @@ module.exports = {
   updateProducts,
   deleteProducts,
   getProducts,
-  getClients
+  getClients,
+  getDetailProduct,
 };

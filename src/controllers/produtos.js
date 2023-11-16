@@ -89,9 +89,24 @@ const getProducts = async (req, res) => {
   }
 };
 
+const getDetailProduct = async (req, res) => {
+  const id = req.query;
+
+  try {
+    const detailProduct = await provider.getAllProducts(id);
+
+    if (!detailProduct) {
+      return res.status(401).json({ mensagem: "O id informado não existe." });
+    }
+  } catch (error) {
+    return res.status(500).json({ mensagem: "Erro interno no servidor." });
+  }
+};
+
 module.exports = {
   registerProducts,
   updateProducts,
   deleteProducts,
   getProducts,
+  getDetailProduct,
 };
