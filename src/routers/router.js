@@ -27,6 +27,7 @@ router.put(
 );
 
 router.get("/cliente", controlador.getClients);
+router.get("/cliente/:id", controlador.getDetailUser);
 
 router.post(
   "/cliente",
