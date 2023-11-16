@@ -270,6 +270,390 @@ Obs.: Retorno resumido para fins de demonstração):
 ];
 ```
 
+### **Cadastrar produto**
+
+#### `POST` `/produto`
+
+#### **Exemplo de requisição**
+
+```javascript
+// POST /produto
+{
+	"descricao": "Nintendo Switch",
+	"quantidade_estoque": 5,
+	"valor": 850000,
+	"categoria_id": 9
+}
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+	"id": 5,
+	"descricao": "Nintendo Switch",
+	"quantidade_estoque": 5,
+	"valor": 850000,
+	"categoria_id": 9
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "O campo categoria_id é obrigatório"
+}
+```
+
+### **Editar dados do produto**
+
+#### `PUT` `/produto/:id`
+
+#### **Exemplo de requisição**
+
+```javascript
+// PUT /produto/5
+{
+	"descricao": "Nintendo Switch Oled",
+	"quantidade_estoque": 5,
+	"valor": 1200000,
+	"categoria_id": 9
+}
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+	"id": 5,
+	"descricao": "Nintendo Switch Oled",
+	"quantidade_estoque": 5,
+	"valor": 1200000,
+	"categoria_id": 9
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "O campo valor é obrigatório"
+}
+```
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "Não existe produto para a id informado."
+}
+```
+
+### **Listar produtos**
+
+#### `GET` `/produto`
+
+Obs.: Esta rota aceita parâmetro de busca via req.query. O parâmetro aceito é "?categoria_id=id" onde id é a id da categoria a ser filtrada.
+
+#### **Exemplo de requisição**
+
+```javascript
+// GET /produto
+// Sem conteúdo no corpo (body) da requisição
+```
+
+```javascript
+// GET /produto?categoria_id=5
+// Sem conteúdo no corpo (body) da requisição
+```
+
+#### **Exemplos de resposta**
+
+Obs.: Alguns resultados foram omitidos para melhor visualização.
+
+```javascript
+// HTTP Status 200 / 201 / 204
+[
+	{
+		"id": 1,
+		"descricao": "Smartphone Moto G9 Play Azul",
+		"quantidade_estoque": 25,
+		"valor": 231000,
+		"categoria_id": 2
+	},
+	{
+		"id": 2,
+		"descricao": "Smartphone Moto G9 Play Preto",
+		"quantidade_estoque": 5,
+		"valor": 212000,
+		"categoria_id": 2
+	},
+	... 
+]
+```
+
+```javascript
+// HTTP Status 200 / 201 / 204
+[
+	{
+		"id": 5,
+		"descricao": "Nintendo Switch Oled",
+		"quantidade_estoque": 5,
+		"valor": 1200000,
+		"categoria_id": 9
+	}
+]
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "O token deve ser informado"
+}
+```
+
+### **Detalhar produto**
+
+#### `GET` `/produto/:id`
+
+#### **Exemplo de requisição**
+
+```javascript
+// GET /produto/5
+// Sem conteúdo no corpo (body) da requisição
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+	"id": 5,
+	"descricao": "Nintendo Switch Oled",
+	"quantidade_estoque": 5,
+	"valor": 1200000,
+	"categoria_id": 9
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "Não existe produto para a id informado."
+}
+```
+
+### **Excluir produto por ID**
+
+#### `DELETE` `/produto/:id`
+
+#### **Exemplo de requisição**
+
+```javascript
+// DELETE /produto/5
+// Sem conteúdo no corpo (body) da requisição
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+// Sem conteúdo no corpo (body) da resposta
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "Não existe produto para a id informado."
+}
+```
+
+### **Cadastrar cliente**
+
+#### `POST` `/cliente`
+
+#### **Exemplo de requisição**
+
+```javascript
+// POST /cliente
+{
+	"nome": "cliente dois",
+	"email": "cliente2@email.com",
+	"cpf": "00000000002",
+	"cep": "00000-000",
+	"rua": "Rua dois",
+	"numero": "113",
+	"bairro": "Jardin das flores",
+	"cidade": "São Paulo",
+	"estado": "SP"
+}
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+	"id": 2,
+	"nome": "cliente dois",
+	"email": "cliente2@email.com",
+	"cpf": "00000000002",
+	"cep": "00000-000",
+	"rua": "Rua dois",
+	"numero": "113",
+	"bairro": "Jardin das flores",
+	"cidade": "São Paulo",
+	"estado": "SP"
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "O campo email é obrigatório"
+}
+```
+
+### **Editar dados do cliente**
+
+#### `PUT` `/cliente/:id`
+
+#### **Exemplo de requisição**
+
+```javascript
+// PUT /cliente/2
+{
+	"nome": "cliente Dois",
+	"email": "cliente2@email.com",
+	"cpf": "00000000012",
+	"cep": "00000-000",
+	"rua": "Rua dois",
+	"numero": "113",
+	"bairro": "Jardin das flores",
+	"cidade": "São Paulo",
+	"estado": "SP"
+}
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+    "id": 2,
+	"nome": "cliente Dois",
+	"email": "cliente2@email.com",
+	"cpf": "00000000012",
+	"cep": "00000-000",
+	"rua": "Rua dois",
+	"numero": "113",
+	"bairro": "Jardin das flores",
+	"cidade": "São Paulo",
+	"estado": "SP"
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "O campo email é obrigatório"
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "O cliente informado não existe."
+}
+```
+### **Listar clientes**
+
+#### `GET` `/cliente`
+
+#### **Exemplo de requisição**
+
+```javascript
+// GET /cliente
+// Sem conteúdo no corpo (body) da requisição
+```
+
+#### **Exemplos de resposta**
+
+Obs.: Alguns resultados foram omitidos para melhor visualização.
+
+```javascript
+// HTTP Status 200 / 201 / 204
+[
+	{
+		"id": 1,
+		"nome": "cliente um",
+		"email": "cliente1@email.com",
+		"cpf": "00000000011",
+		"cep": "00000-000",
+		"rua": "Rua dois",
+		"numero": "113",
+		"bairro": "Jardin das flores",
+		"cidade": "São Paulo",
+		"estado": "SP"
+	},
+	{
+		"id": 2,
+		"nome": "cliente Dois",
+		"email": "cliente2@email.com",
+		"cpf": "00000000012",
+		"cep": "00000-000",
+		"rua": "Rua dois",
+		"numero": "113",
+		"bairro": "Jardin das flores",
+		"cidade": "São Paulo",
+		"estado": "SP"
+	}
+]
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "O token deve ser informado"
+}
+```
+
+### **Detalhar cliente**
+
+#### `GET` `/cliente/:id`
+
+#### **Exemplo de requisição**
+
+```javascript
+// GET /cliente/2
+// Sem conteúdo no corpo (body) da requisição
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+	"id": 2,
+	"nome": "cliente Dois",
+	"email": "cliente2@email.com",
+	"cpf": "00000000012",
+	"cep": "00000-000",
+	"rua": "Rua dois",
+	"numero": "113",
+	"bairro": "Jardin das flores",
+	"cidade": "São Paulo",
+	"estado": "SP"
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "Não existe cliente para a id informado."
+}
+```
+
+
 Novos endpoints serão adicionado nas próximas sprints.
 
 ---
