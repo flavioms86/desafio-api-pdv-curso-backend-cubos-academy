@@ -11,6 +11,7 @@ const {
   updateProductProvider,
   verifyProductsIdProvider,
   deleteProductProvider,
+  getProduct,
   getAllProducts,
   getAllProductsAndCategory,
 } = require("./produtos");
@@ -20,7 +21,8 @@ const {
   verifyClientCPF,
   createClientProvider,
   updateClientProvider,
-  getAllClients
+  getClient,
+  getAllClients,
 } = require("./clientes");
 
 module.exports = {
@@ -39,7 +41,9 @@ module.exports = {
   updateProductProvider,
   verifyProductsIdProvider,
   deleteProductProvider,
+  getProduct,
   getAllProducts,
   getAllProductsAndCategory,
-  getAllClients
+  getClient,
+  getAllClients,
 };

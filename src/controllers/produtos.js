@@ -7,9 +7,7 @@ const registerProducts = async (req, res) => {
     const verifyCategory = await provider.verifyCategoryProvider(categoria_id);
 
     if (!verifyCategory) {
-      return res
-        .status(404)
-        .json({ mensagem: "O id da categoria informada não existe." });
+      return res.status(404).json({ mensagem: "O id da categoria informada não existe." });
     }
     const product = await provider.createProductProvider(
       descricao,
@@ -32,14 +30,10 @@ const updateProducts = async (req, res) => {
     const verifyProduct = await provider.verifyProductsIdProvider(id);
 
     if (!verifyCategoria) {
-      return res
-        .status(404)
-        .json({ mensagem: "O id da categoria informada não existe." });
+      return res.status(404).json({ mensagem: "O id da categoria informada não existe." });
     }
     if (!verifyProduct) {
-      return res
-        .status(404)
-        .json({ mensagem: "O id do produto informado não existe." });
+      return res.status(404).json({ mensagem: "O id do produto informado não existe." });
     }
 
     const product = await provider.updateProductProvider(
@@ -62,9 +56,7 @@ const deleteProducts = async (req, res) => {
     const verifyProduct = await provider.verifyProductsIdProvider(id);
 
     if (!verifyProduct) {
-      return res
-        .status(404)
-        .json({ mensagem: "O id do produto informado não existe." });
+      return res.status(404).json({ mensagem: "O id do produto informado não existe." });
     }
     await provider.deleteProductProvider(id);
     return res.status(204).send();
@@ -90,14 +82,15 @@ const getProducts = async (req, res) => {
 };
 
 const getDetailProduct = async (req, res) => {
-  const id = req.query;
+  const { id } = req.params;
 
   try {
-    const detailProduct = await provider.getAllProducts(id);
+    const detailProduct = await provider.getProduct(id);
 
-    if (!detailProduct) {
-      return res.status(401).json({ mensagem: "O id informado não existe." });
+    if (detailProduct.length === 0) {
+      return res.status(401).json({ mensagem: "Não existe produto para a id informado." });
     }
+    return res.status(200).json(detailProduct[0]);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno no servidor." });
   }

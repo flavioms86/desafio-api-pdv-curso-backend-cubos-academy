@@ -10,12 +10,7 @@ const verifyProductsIdProvider = async (id) => {
   }
 };
 
-const createProductProvider = async (
-  descricao,
-  quantidade_estoque,
-  valor,
-  categoria_id
-) => {
+const createProductProvider = async (descricao, quantidade_estoque, valor, categoria_id) => {
   const result = await Knex("produtos")
     .insert({ descricao, quantidade_estoque, valor, categoria_id })
     .returning("*");
@@ -23,13 +18,7 @@ const createProductProvider = async (
   return result[0];
 };
 
-const updateProductProvider = async (
-  id,
-  descricao,
-  quantidade_estoque,
-  valor,
-  categoria_id
-) => {
+const updateProductProvider = async (id, descricao, quantidade_estoque, valor, categoria_id) => {
   const result = await Knex("produtos")
     .update({ descricao, quantidade_estoque, valor, categoria_id })
     .where({ id: id })
@@ -48,6 +37,11 @@ const deleteProductProvider = async (id) => {
   }
 };
 
+const getProduct = async (id) => {
+  const result = await Knex("produtos").where({ id });
+  return result;
+};
+
 const getAllProducts = async () => {
   const result = await Knex("produtos");
   return result;
@@ -63,6 +57,7 @@ module.exports = {
   updateProductProvider,
   verifyProductsIdProvider,
   deleteProductProvider,
+  getProduct,
   getAllProducts,
   getAllProductsAndCategory,
 };
