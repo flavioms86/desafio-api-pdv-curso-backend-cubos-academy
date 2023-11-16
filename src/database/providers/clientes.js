@@ -54,7 +54,7 @@ const getClient = async (id) => {
 };
 
 const getAllClients = async () => {
-  const result = await Knex("clientes");
+  const result = await Knex("clientes").orderBy("id", "asc");
   return result;
 };
 

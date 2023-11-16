@@ -43,7 +43,7 @@ const getProduct = async (id) => {
 };
 
 const getAllProducts = async () => {
-  const result = await Knex("produtos");
+  const result = await Knex("produtos").orderBy("id", "asc");
   return result;
 };
 
