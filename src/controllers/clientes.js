@@ -92,5 +92,5 @@ const getClients = async (req, res) => {
 module.exports = {
   registerClient,
   updateClient,
-  getClients
+  getClients,
 };
