@@ -79,5 +79,5 @@ module.exports = {
   updateClientProvider,
   verifyClientEmail,
   verifyClientCPF,
-  getAllClients,
+  getAllClients
 };

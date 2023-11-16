@@ -20,5 +20,5 @@ module.exports = {
   updateProducts,
   deleteProducts,
   getProducts,
-  getClients,
+  getClients
 };
