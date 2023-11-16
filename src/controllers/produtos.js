@@ -43,7 +43,7 @@ const updateProducts = async (req, res) => {
       valor,
       categoria_id
     );
-    return res.status(200).json(product);
+    return res.status(204).send();
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno no servidor." });
   }
