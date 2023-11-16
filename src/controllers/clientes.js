@@ -77,7 +77,7 @@ const getClients = async (req, res) => {
   try {
     const user = await provider.getAllClients();
 
-    return res.status(201).json(user);
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor." });
   }
@@ -89,9 +89,9 @@ const getDetailClient = async (req, res) => {
     const user = await provider.getClient(id);
 
     if (user.length === 0) {
-      return res.status(401).json({ mensagem: "Não existe cliente para o ID informado." });
+      return res.status(400).json({ mensagem: "Não existe cliente para o ID informado." });
     }
-    return res.status(201).json(user[0]);
+    return res.status(200).json(user[0]);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor." });
   }
