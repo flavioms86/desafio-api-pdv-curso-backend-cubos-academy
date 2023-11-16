@@ -74,23 +74,17 @@ const updateClient = async (req, res) => {
 };
 
 const getClients = async (req, res) => {
-  const id = req.query;
   try {
-    const user = await provider.getAllClients(id);
+    const user = await provider.getAllClients();
 
-    if (!id) {
-      return res
-      .status(401)
-      .json({ mensagem: "O id informado não existe." });
-    }
-      return res.status(201).json(user)
+    return res.status(201).json(user);
   } catch (error) {
-    return res.status(500).json({ mensagem: "Erro interno do servidor."});
+    return res.status(500).json({ mensagem: "Erro interno do servidor." });
   }
 };
 
 module.exports = {
   registerClient,
   updateClient,
-  getClients
+  getClients,
 };
