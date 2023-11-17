@@ -30,10 +30,10 @@ const updateProducts = async (req, res) => {
     const verifyProduct = await provider.verifyProductsIdProvider(id);
 
     if (!verifyCategoria) {
-      return res.status(404).json({ mensagem: "Não existe categoria para o id informado." });
+      return res.status(400).json({ mensagem: "Não existe categoria para o id informado." });
     }
     if (!verifyProduct) {
-      return res.status(404).json({ mensagem: "Não existe produto para o id informado." });
+      return res.status(400).json({ mensagem: "Não existe produto para o id informado." });
     }
 
     const product = await provider.updateProductProvider(
