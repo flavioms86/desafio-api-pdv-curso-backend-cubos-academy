@@ -5,13 +5,13 @@ const clientRegister = joi.object({
     .string()
     .required()
     .min(3)
-    .pattern(/^[A-Za-zÀ-ÿ\s]+$/)
+    // .pattern(/^[A-Za-zÀ-ÿ\s]+$/)
     .messages({
       "any.required": "O campo nome é obrigatório",
       "string.base": "O campo nome deve ser do tipo string",
       "string.empty": "O campo nome é obrigatório",
       "string.min": "O campo nome deve ter um tamanho mínimo de 3 caracteres.",
-      "string.pattern.base": "O campo nome deve conter apenas letras com ou sem acentuação.",
+      // "string.pattern.base": "O campo nome deve conter apenas letras com ou sem acentuação.",
     }),
   email: joi.string().email().required().messages({
     "string.email": "O campo email precisa ser em um formato valido",
@@ -26,13 +26,13 @@ const clientRegister = joi.object({
   }),
   cep: joi
     .string()
-    .length(9)
-    .pattern(/^\d{5}-\d{3}$/)
+    .length(8)
+    // .pattern(/^\d{5}-\d{3}$/)
     .optional()
     .messages({
       "string.base": "O campo cep deve ser do tipo string",
-      "string.length": "O campo cep deve ter 9 caracteres no formato '00000-000'.",
-      "string.pattern.base": "O campo cep deve ser no formato '00000-000'.",
+      "string.length": "O campo cep deve ter 8 caracteres no formato '00000000'.",
+      // "string.pattern.base": "O campo cep deve ser no formato '00000-000'.",
       "string.empty": "O cep nome não pode ser vazio.",
     }),
   rua: joi.string().max(60).optional().messages({

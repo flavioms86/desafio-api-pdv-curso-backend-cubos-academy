@@ -71,6 +71,11 @@ const getProducts = async (req, res) => {
   try {
     if (categoria_id) {
       const products = await provider.getAllProductsAndCategory(categoria_id);
+      if (products.length === 0) {
+        return res
+          .status(400)
+          .json({ mensagem: "Não existe produto cadastrado com a id de categoria informada." });
+      }
       return res.status(200).json(products);
     }
 
