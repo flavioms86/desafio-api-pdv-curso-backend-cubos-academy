@@ -11,7 +11,7 @@
     "knex:rollback": "knex --knexfile ./src/database/knex/Environment.js migrate:rollback",
     "knex:migrate-latest": "knex --knexfile ./src/database/knex/Environment.js migrate:latest",
     "knex:migrate-next": "knex --knexfile ./src/database/knex/Environment.js migrate:up",
-    "knex:migrate-make": "knex --knexfile ./src/database/knex/Environment.js migrate:make clientes",
+    "knex:migrate-make": "knex --knexfile ./src/database/knex/Environment.js migrate:make atualizar_produtos",
     "knex:seed-make": "knex --knexfile ./src/database/knex/Environment.js seed:make categorias",
     "knex:seed-run": "knex --knexfile ./src/database/knex/Environment.js seed:run",
     "knex:preparar": "npm run knex:migrate-latest && npm run knex:seed-run"
