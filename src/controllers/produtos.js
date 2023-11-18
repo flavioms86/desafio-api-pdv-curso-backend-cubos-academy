@@ -66,9 +66,9 @@ const updateProducts = async (req, res) => {
     const product = await provider.updateProductProvider(
       id,
       descricao,
-      quantidade_estoque,
-      valor,
-      categoria_id
+      Number(quantidade_estoque),
+      Number(valor),
+      Number(categoria_id)
     );
 
     if (req.file) {
@@ -87,11 +87,8 @@ const updateProducts = async (req, res) => {
         return res.status(500).json({ mensagem: "Erro interno no servidor." });
       }
     }
-    await deleteFile(verifyProduct.produto_imagem);
-    await updateProductImage(product.id, null);
-    const result = await provider.verifyProductsIdProvider(id);
 
-    return res.status(200).json(result);
+    return res.status(200).json(product);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno no servidor." });
   }
