@@ -14,6 +14,7 @@ const {
   getProduct,
   getAllProducts,
   getAllProductsAndCategory,
+  updateProductImage,
 } = require("./produtos");
 const {
   verifyClientsProvider,
@@ -39,6 +40,7 @@ module.exports = {
   createProductProvider,
   verifyCategoryProvider,
   updateProductProvider,
+  updateClientProvider,
   verifyProductsIdProvider,
   deleteProductProvider,
   getProduct,
