@@ -1,5 +1,5 @@
 const { getAllprovider, verifyCategoryProvider } = require("./categorias");
-const { getAllOrder } = require("./pedidos");
+const { getAllOrder, getOrderById } = require("./pedidos");
 
 const {
   createUserProvider,
@@ -49,5 +49,6 @@ module.exports = {
   getAllProductsAndCategory,
   getClient,
   getAllClients,
-  getAllOrder
+  getAllOrder,
+  getOrderById
 };
