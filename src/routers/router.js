@@ -66,6 +66,5 @@ router.put(
 router.delete("/produto/:id", controlador.deleteProducts);
 
 router.get("/pedido", controlador.getOrder);
-router.get("/pedido/:id", controlador.getOrderId);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const getAllcategory = require("./categorias");
 const { getUser, loginUser, registerUser, updateUser } = require("./usuarios");
 const { registerClient, updateClient, getClients, getDetailClient } = require("./clientes");
-const { getOrder, getOrderId } = require("./pedidos");
+const { getOrder } = require("./pedidos");
 const {
   registerProducts,
   updateProducts,
@@ -25,6 +25,5 @@ module.exports = {
   getClients,
   getDetailProduct,
   getDetailClient,
-  getOrder,
-  getOrderId
+  getOrder
 };
