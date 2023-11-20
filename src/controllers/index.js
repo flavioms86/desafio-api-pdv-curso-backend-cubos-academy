@@ -9,6 +9,8 @@ const {
   getDetailProduct,
 } = require("./produtos");
 
+const registerRequest  = require("./pedidos")
+
 module.exports = {
   getAllcategory,
   getUser,
@@ -24,4 +26,5 @@ module.exports = {
   getClients,
   getDetailProduct,
   getDetailClient,
+  registerRequest
 };

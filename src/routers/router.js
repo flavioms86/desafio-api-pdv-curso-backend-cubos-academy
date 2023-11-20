@@ -64,5 +64,6 @@ router.put(
   controlador.updateProducts
 );
 router.delete("/produto/:id", controlador.deleteProducts);
+router.post("/pedido", controlador.registerRequest)
 
 module.exports = router;
