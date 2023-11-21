@@ -26,7 +26,7 @@ const {
   getAllClients,
 } = require("./clientes");
 
-const { verifyProductStock, createRequestProvider } = require("./pedidos");
+const { verifyProductForRequest, createRequestProductProvider, getIdRequest, createRequestProvider } = require("./pedidos");
 
 module.exports = {
   getAllprovider,
@@ -50,6 +50,8 @@ module.exports = {
   getAllProductsAndCategory,
   getClient,
   getAllClients,
-  verifyProductStock,
+  verifyProductForRequest,
+  // createRequestProductProvider,
+  
   createRequestProvider,
 };
