@@ -37,23 +37,14 @@ router.put(
     controlador.updateClient
 );
 
-// router.post(
-//   "/produto",
-//   multer.single("produto_imagem"),
-//   bodyValidation(joiSchemas.productsRegister),
-
-//   controlador.registerProducts
-// );
-
 router.post(
     "/produto",
-
+    bodyValidation(joiSchemas.productsRegister),
     controlador.registerProducts
 );
 
 router.put(
     "/produto/:id",
-    multer.single("produto_imagem"),
     bodyValidation(joiSchemas.productsRegister),
 
     controlador.updateProducts

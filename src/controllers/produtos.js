@@ -57,25 +57,10 @@ const registerProducts = async (req, res) => {
                 const result = await provider.verifyProductsIdProvider(product.id);
                 return res.status(201).json(result);
             } catch (error) {
-                // console.log(error);
                 return res
                     .status(500)
                     .json({ mensagtem: "Erro interno do servidor." });
             }
-            // const { file } = req;
-            // try {
-            //   const arquivo = await uploadFile(
-            //     `produtos/${product.id}/${file.originalname}`,
-            //     file.buffer,
-            //     file.mimetype
-            //   );
-
-            //   await updateProductImage(product.id, arquivo.Location);
-            //   const result = await provider.verifyProductsIdProvider(product.id);
-            //   return res.status(201).json(result);
-            // } catch (error) {
-            //   return res.status(500).json({ mensagem: "Erro interno no servidor." });
-            // }
         }
 
         return res.status(201).json(product);
@@ -85,11 +70,13 @@ const registerProducts = async (req, res) => {
 };
 
 const updateProducts = async (req, res) => {
-    const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
+    const { descricao, quantidade_estoque, valor, categoria_id, produto_imagem } =
+        req.body;
     const id = req.params.id;
 
     try {
         const verifyCategoria = await provider.verifyCategoryProvider(categoria_id);
+
         const verifyProduct = await provider.verifyProductsIdProvider(id);
 
         if (!verifyCategoria) {
@@ -111,22 +98,48 @@ const updateProducts = async (req, res) => {
             Number(categoria_id)
         );
 
-        if (req.file) {
-            const { file } = req;
+        if (produto_imagem) {
             try {
-                const arquivo = await uploadFile(
-                    `produtos/${product.id}/${file.originalname}`,
-                    file.buffer,
-                    file.mimetype
+                const testBase64 =
+                    /^data:image\/([A-Za-z-+\/]+);base64,(.+)$([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+
+                const isBase64valid = testBase64.test(produto_imagem);
+
+                if (!isBase64valid) {
+                    return res.status(400).json({
+                        messagem:
+                            "Informe uma string no formato base64 no campo produto_imagem.",
+                    });
+                }
+
+                const base64DataFile = new Buffer.from(
+                    produto_imagem.replace(/^data:image\/\w+;base64,/, ""),
+                    "base64"
                 );
 
+                const fileType = produto_imagem.split(";")[0].split("/")[1];
+
+                const imageName = `image-${Date.now().toString()}`;
+
+                const arquivo = await uploadFile(
+                    `produtos/${product.id}/${imageName}.${fileType}`,
+                    base64DataFile,
+                    "base64",
+                    fileType
+                );
+
+                await deleteFile(verifyProduct.produto_imagem);
+
                 await updateProductImage(product.id, arquivo.Location);
+
                 const result = await provider.verifyProductsIdProvider(product.id);
-                return res.status(200).json(result);
+
+                return res.status(201).json(result);
             } catch (error) {
+                console.log(error.message);
                 return res
                     .status(500)
-                    .json({ mensagem: "Erro interno no servidor." });
+                    .json({ mensagtem: "Erro interno do servidor." });
             }
         }
 
@@ -150,7 +163,9 @@ const deleteProducts = async (req, res) => {
         if (verifyProduct.produto_imagem) {
             await deleteFile(verifyProduct.produto_imagem);
         }
+
         await provider.deleteProductProvider(id);
+
         return res.status(204).send();
     } catch (error) {
         return res.status(500).json({ mensagem: "Erro interno no servidor." });
