@@ -2,7 +2,6 @@ const controlador = require("../controllers");
 const authenticateUser = require("../middlewares/loginValidation");
 const { bodyValidation } = require("../middlewares/joiValidation");
 const joiSchemas = require("../utils/joi_schemas");
-const multer = require("../utils/storage/upload/multer");
 
 const router = require("express").Router();
 

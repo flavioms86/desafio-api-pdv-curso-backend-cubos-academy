@@ -1,7 +1,6 @@
 const provider = require("../database/providers");
 const { updateProductImage } = require("../database/providers/produtos");
 const { uploadFile, deleteFile } = require("../utils/storage/backblaze/service");
-const { decode } = require("base64-arraybuffer");
 
 const registerProducts = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id, produto_imagem } =
