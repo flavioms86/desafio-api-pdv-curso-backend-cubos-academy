@@ -3,16 +3,14 @@ const { htmlCompiler } = require("../utils/email_notifications/compilation_html"
 const transporter = require("../utils/email_notifications/email_connection");
 
 const registerRequest = async (req, res) => {
+  
   try {
     const {
       cliente_id,
       observacao,
-      pedido_produtos,
-      produto_id,
-      quantidade_produto,
-      valor_produto,
+      pedido_produtos
     } = req.body;
-    const {user} = req.userId
+    
 
     if (!cliente_id || !pedido_produtos || pedido_produtos.length === 0) {
       return res
@@ -21,19 +19,20 @@ const registerRequest = async (req, res) => {
     }
 
     const clientExists = await provider.verifyClientsProvider(cliente_id);
+    
 
     if (!clientExists) {
       return res.status(404).json({ mensagem: "Cliente não encontrado." });
     }
-
+ 
     //for of para verificar estoque
     for (const produtoPedido of pedido_produtos) {
       const { produto_id, quantidade_produto } = produtoPedido;
       const productExists = await provider.verifyProductForRequest(produto_id);
-
+      
       if (!productExists) {
         return res.status(404).json({
-          mensagem: "Produto não encontrado.",
+          mensagem: "Produto não encontrado."
         });
       }
 
@@ -45,23 +44,21 @@ const registerRequest = async (req, res) => {
           mensagem: `Quantidade insuficiente em estoque para ${productExists.descricao}`,
         });
       }
+      await provider.createRequestProvider(
+        cliente_id,
+        observacao,
+        pedido_produtos
+      );
     }
 
-    await provider.createRequestProvider(
-      cliente_id,
-      observacao,
-      produto_id,
-      quantidade_produto,
-      valor_produto
-    );
-
+      
     const html = await htmlCompiler("src/utils/email_notifications/pedido.html", {
-      destinatario: user.nome,
+      destinatario: clientExists.nome,
     });
 
     transporter.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
-      to: `${user.nome} <${user.email}>`,
+      to: `${clientExists.nome} <${clientExists.email}>`,
       subject: "Pedido efetuado com sucesso!",
       html,
     });

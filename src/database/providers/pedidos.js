@@ -9,26 +9,65 @@ const verifyProductForRequest = async (produto_id) => {
   }
 };
 
+
+
+// const createRequestProvider = async (
+//   cliente_id,
+//   observacao,
+//   produto_id,
+//   quantidade_produto,
+//   valor_produto
+// ) => {
+  
+
+//   const [result] = await Knex("pedidos").insert({
+//     cliente_id,
+//     observacao,
+//     valor_total: quantidade_produto * valor_produto,
+//   });
+
+//   await Knex("pedido_produtos").insert({
+//     pedido_id: result,
+//     produto_id,
+//     quantidade_produto,
+//     valor_produto,
+//   });
+// };
+
 const createRequestProvider = async (
   cliente_id,
   observacao,
-  produto_id = 34,
-  quantidade_produto = 5,
-  valor_produto = 40000
+  pedido_produtos
 ) => {
-  const [result] = await Knex("pedidos").insert({
+
+  const [pedido_id] = await Knex("pedidos").insert({
     cliente_id,
     observacao,
-    valor_total: quantidade_produto * valor_produto,
+    valor_total: 0 
   });
-  
-  await Knex("pedido_produtos").insert({
-    pedido_id: result,
-    produto_id,
-    quantidade_produto,
-    valor_produto,
-  });
+
+
+  const totalValue = pedido_produtos.reduce((total, produto) => {
+    return total + produto.quantidade_produto * produto.valor_produto;
+  }, 0);
+
+  await Knex("pedidos").where({ id: pedido_id }).update({ valor_total: totalValue });
+
+
+  for (const produtoPedido of pedido_produtos) {
+    const { produto_id, quantidade_produto, valor_produto } = produtoPedido;
+
+    await Knex("pedido_produtos").insert({
+      pedido_id,
+      produto_id,
+      quantidade_produto,
+      valor_produto,
+    });
+  }
 };
+
+
+
 
 
 
