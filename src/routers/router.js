@@ -8,9 +8,9 @@ const router = require("express").Router();
 
 router.post("/login", bodyValidation(joiSchemas.userLogin), controlador.loginUser);
 router.post(
-  "/usuario",
-  bodyValidation(joiSchemas.userRegister),
-  controlador.registerUser
+    "/usuario",
+    bodyValidation(joiSchemas.userRegister),
+    controlador.registerUser
 );
 router.get("/categoria", controlador.getAllcategory);
 
@@ -18,52 +18,56 @@ router.use(authenticateUser);
 
 router.get("/usuario", controlador.getUser);
 router.put(
-  "/usuario",
-  bodyValidation(joiSchemas.userRegister),
-  controlador.updateUser
+    "/usuario",
+    bodyValidation(joiSchemas.userRegister),
+    controlador.updateUser
 );
 
 router.get("/cliente", controlador.getClients);
 router.get("/cliente/:id", controlador.getDetailClient);
 
 router.post(
-  "/cliente",
-  bodyValidation(joiSchemas.clientRegister),
-  controlador.registerClient
+    "/cliente",
+    bodyValidation(joiSchemas.clientRegister),
+    controlador.registerClient
 );
 router.put(
-  "/cliente/:id",
-  bodyValidation(joiSchemas.clientRegister),
-  controlador.updateClient
+    "/cliente/:id",
+    bodyValidation(joiSchemas.clientRegister),
+    controlador.updateClient
 );
 
 router.post(
-  "/produto",
-  multer.single("produto_imagem"),
-  bodyValidation(joiSchemas.productsRegister),
+    "/produto",
+    multer.single("produto_imagem"),
+    bodyValidation(joiSchemas.productsRegister),
 
-  controlador.registerProducts
+    controlador.registerProducts
 );
 router.put(
-  "/produto/:id",
-  multer.single("produto_imagem"),
-  bodyValidation(joiSchemas.productsRegister),
+    "/produto/:id",
+    multer.single("produto_imagem"),
+    bodyValidation(joiSchemas.productsRegister),
 
-  controlador.updateProducts
+    controlador.updateProducts
 );
 router.get("/produto", controlador.getProducts);
 router.get("/produto/:id", controlador.getDetailProduct);
 router.post(
-  "/produto",
-  bodyValidation(joiSchemas.productsRegister),
-  controlador.registerProducts
+    "/produto",
+    bodyValidation(joiSchemas.productsRegister),
+    controlador.registerProducts
 );
 router.put(
-  "/produto/:id",
-  bodyValidation(joiSchemas.productsRegister),
-  controlador.updateProducts
+    "/produto/:id",
+    bodyValidation(joiSchemas.productsRegister),
+    controlador.updateProducts
 );
 router.delete("/produto/:id", controlador.deleteProducts);
-router.post("/pedido", controlador.registerRequest)
+router.post(
+    "/pedido",
+    bodyValidation(joiSchemas.cadastroPedido),
+    controlador.registerRequest
+);
 
 module.exports = router;
