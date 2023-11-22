@@ -13,8 +13,6 @@ const registerOrder = async (req, res) => {
             .json({ mensagem: "Não existe cliente para o id informado." });
     }
 
-    console.log(pedido_produtos);
-
     if (pedido_produtos.length === 0) {
         return res.status(400).json({
             mensagem: "Deve ser informado a lista de produtos a ser feito o pedido",
@@ -50,6 +48,17 @@ const registerOrder = async (req, res) => {
 
     await provider.createOrderProducts(registrarPedido[0].id, produtosPedido);
 
-    return res.status(201).json("tudo certo.. eu acho");
+    const html = await htmlCompiler("src/utils/email_notifications/pedido.html", {
+        destinatario: clientExists.nome,
+    });
+
+    transporter.sendMail({
+        from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+        to: `${clientExists.nome} <${clientExists.email}>`,
+        subject: "Pedido efetuado com sucesso!",
+        html,
+    });
+
+    return res.status(201).json({ mensagem: "Pedido cadastrado com sucesso!" });
 };
 module.exports = registerOrder;
