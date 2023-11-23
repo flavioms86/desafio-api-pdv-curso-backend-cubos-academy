@@ -653,6 +653,52 @@ Obs.: Alguns resultados foram omitidos para melhor visualização.
 }
 ```
 
+### **Cadastrar pedido**
+
+#### `POST` `/pedido`
+
+#### **Exemplo de requisição**
+
+```javascript
+// POST /pedido
+{
+    "cliente_id": 1,
+    "observacao": "Deixar na portaria",
+    "pedido_produtos": [
+        {
+            "produto_id": 68,
+            "quantidade_produto": 1
+        },
+        {
+            "produto_id": 71,
+            "quantidade_produto": 1
+        }
+    ]
+}
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+	"mensagem": "Pedido cadastrado com sucesso!"
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "Não existe cliente para o id informado."
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "Não existe o produto com o id 682."
+}
+```
 
 Novos endpoints serão adicionado nas próximas sprints.
 
