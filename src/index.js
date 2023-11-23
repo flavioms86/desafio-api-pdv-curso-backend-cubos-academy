@@ -8,11 +8,11 @@ const PORT = process.env.PORT;
 
 const server = express();
 
-server.use(body_parser.json({ limit: "50mb", extended: true }));
+server.use(body_parser.json({ limit: "4mb", extended: true }));
 server.use(
-    body_parser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
+    body_parser.urlencoded({ limit: "4mb", extended: true, parameterLimit: 50000 })
 );
-server.use(body_parser.text({ limit: "200mb" }));
+server.use(body_parser.text({ limit: "4mb" }));
 
 server.use(router);
 

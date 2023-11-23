@@ -1,5 +1,4 @@
 const provider = require("../database/providers");
-const { updateProductImage } = require("../database/providers/produtos");
 const { uploadFile, deleteFile } = require("../utils/storage/backblaze/service");
 
 const registerProducts = async (req, res) => {
@@ -52,10 +51,11 @@ const registerProducts = async (req, res) => {
                     fileType
                 );
 
-                await updateProductImage(product.id, arquivo.Location);
+                await provider.updateProductImage(product.id, arquivo.Location);
                 const result = await provider.verifyProductsIdProvider(product.id);
                 return res.status(201).json(result);
             } catch (error) {
+                console.log(error.message);
                 return res
                     .status(500)
                     .json({ mensagtem: "Erro interno do servidor." });
@@ -129,7 +129,7 @@ const updateProducts = async (req, res) => {
 
                 await deleteFile(verifyProduct.produto_imagem);
 
-                await updateProductImage(product.id, arquivo.Location);
+                await provider.updateProductImage(product.id, arquivo.Location);
 
                 const result = await provider.verifyProductsIdProvider(product.id);
 
@@ -153,7 +153,6 @@ const deleteProducts = async (req, res) => {
 
     try {
         const verifyProduct = await provider.verifyProductsIdProvider(id);
-
         if (!verifyProduct) {
             return res
                 .status(404)
@@ -164,7 +163,6 @@ const deleteProducts = async (req, res) => {
         }
 
         await provider.deleteProductProvider(id);
-
         return res.status(204).send();
     } catch (error) {
         return res.status(500).json({ mensagem: "Erro interno no servidor." });

@@ -61,5 +61,12 @@ router.put(
     controlador.updateProducts
 );
 router.delete("/produto/:id", controlador.deleteProducts);
+router.post(
+    "/pedido",
+    bodyValidation(joiSchemas.cadastroPedido),
+    controlador.makeOrder
+);
+
+router.get("/pedido", controlador.getOrder);
 
 module.exports = router;
