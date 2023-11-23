@@ -1,6 +1,4 @@
 const provider = require("../database/providers");
-const { updateProductImage } = require("../database/providers/produtos");
-const { getOrderProducts } = require("../database/providers/pedidos");
 const { uploadFile, deleteFile } = require("../utils/storage/backblaze/service");
 
 const registerProducts = async (req, res) => {
