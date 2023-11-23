@@ -1,5 +1,4 @@
 const provider = require("../database/providers");
-const { updateProductImage } = require("../database/providers/produtos");
 const { uploadFile, deleteFile } = require("../utils/storage/backblaze/service");
 
 const registerProducts = async (req, res) => {
@@ -30,11 +29,13 @@ const registerProducts = async (req, res) => {
                     file.mimetype
                 );
 
-                await updateProductImage(product.id, arquivo.Location);
+                await provider.updateProductImage(product.id, arquivo.Location);
                 const result = await provider.verifyProductsIdProvider(product.id);
                 return res.status(201).json(result);
             } catch (error) {
-                return res.status(500).json({ mensagem: "Erro interno no servidor." });
+                return res
+                    .status(500)
+                    .json({ mensagem: "Erro interno no servidor." });
             }
         }
 
@@ -80,11 +81,13 @@ const updateProducts = async (req, res) => {
                     file.mimetype
                 );
 
-                await updateProductImage(product.id, arquivo.Location);
+                await provider.updateProductImage(product.id, arquivo.Location);
                 const result = await provider.verifyProductsIdProvider(product.id);
                 return res.status(200).json(result);
             } catch (error) {
-                return res.status(500).json({ mensagem: "Erro interno no servidor." });
+                return res
+                    .status(500)
+                    .json({ mensagem: "Erro interno no servidor." });
             }
         }
 
@@ -123,7 +126,8 @@ const getProducts = async (req, res) => {
             const products = await provider.getAllProductsAndCategory(categoria_id);
             if (products.length === 0) {
                 return res.status(400).json({
-                    mensagem: "Não existe produto cadastrado com a id de categoria informada.",
+                    mensagem:
+                        "Não existe produto cadastrado com a id de categoria informada.",
                 });
             }
             return res.status(200).json(products);
