@@ -1,4 +1,3 @@
-const { id } = require("../../utils/joi_schemas/loginUsuario");
 const Knex = require("../knex/index");
 
 const getAllOrder = async () => {
