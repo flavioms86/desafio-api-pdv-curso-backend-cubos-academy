@@ -276,13 +276,16 @@ Obs.: Retorno resumido para fins de demonstração):
 
 #### **Exemplo de requisição**
 
+Obs.: O campo "produto_imagem" recebe a imagem no formato base64. Mo exemplo a baixo o código foi reduzido propositalmente para melhor visualização.
+
 ```javascript
 // POST /produto
 {
 	"descricao": "Nintendo Switch",
 	"quantidade_estoque": 5,
 	"valor": 850000,
-	"categoria_id": 9
+	"categoria_id": 9,
+	"produto_imagem": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA2sAAALSCAIAAADMZd7OAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8Y...."
 }
 ```
 
@@ -295,7 +298,8 @@ Obs.: Retorno resumido para fins de demonstração):
 	"descricao": "Nintendo Switch",
 	"quantidade_estoque": 5,
 	"valor": 850000,
-	"categoria_id": 9
+	"categoria_id": 9,
+	"produto_imagem": "https://linkparaimagem.com/imagem.jpg"
 }
 ```
 
@@ -318,7 +322,8 @@ Obs.: Retorno resumido para fins de demonstração):
 	"descricao": "Nintendo Switch Oled",
 	"quantidade_estoque": 5,
 	"valor": 1200000,
-	"categoria_id": 9
+	"categoria_id": 9,
+	"produto_imagem": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA2sAAALSCAIAAADMZd7OAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8Y...."
 }
 ```
 
@@ -331,7 +336,8 @@ Obs.: Retorno resumido para fins de demonstração):
 	"descricao": "Nintendo Switch Oled",
 	"quantidade_estoque": 5,
 	"valor": 1200000,
-	"categoria_id": 9
+	"categoria_id": 9,
+	"produto_imagem": "https://linkparaimagem.com/imagem.jpg"
 }
 ```
 
@@ -458,6 +464,13 @@ Obs.: Alguns resultados foram omitidos para melhor visualização.
 ```javascript
 // HTTP Status 200 / 201 / 204
 // Sem conteúdo no corpo (body) da resposta
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "O produto não pode ser excluído porque está cadastrado em algum pedido."
+}
 ```
 
 ```javascript
@@ -653,6 +666,138 @@ Obs.: Alguns resultados foram omitidos para melhor visualização.
 }
 ```
 
+### **Cadastrar pedido**
+
+#### `POST` `/pedido`
+
+#### **Exemplo de requisição**
+
+```javascript
+// POST /pedido
+{
+    "cliente_id": 1,
+    "observacao": "Deixar na portaria",
+    "pedido_produtos": [
+        {
+            "produto_id": 68,
+            "quantidade_produto": 1
+        },
+        {
+            "produto_id": 71,
+            "quantidade_produto": 1
+        }
+    ]
+}
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+{
+	"mensagem": "Pedido cadastrado com sucesso!"
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "Não existe cliente para o id informado."
+}
+```
+
+```javascript
+// HTTP Status 400 / 401 / 403 / 404
+{
+	"mensagem": "Não existe o produto com o id 682."
+}
+```
+
+### **Listar pedido**
+
+#### `GET` `/pedido`
+
+#### **Exemplo de requisição**
+
+```javascript
+// GET /pedido
+// Sem conteúdo no corpo (body) da requisição
+```
+
+```javascript
+// GET /pedido?cliente_id=1
+// Sem conteúdo no corpo (body) da requisição
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+[
+	{
+		"pedido": {
+			"id": 1,
+			"valor_total": 2120000,
+			"observacao": "Pedido cliente 1",
+			"cliente_id": 1
+		},
+		"pedido_produtos": [
+			{
+				"id": 1,
+				"quantidade_produto": 1,
+				"valor_produto": 2120000,
+				"pedido_id": 1,
+				"produto_id": 68
+			}
+		]
+	},
+	{
+		"pedido": {
+			"id": 2,
+			"valor_total": 250000,
+			"observacao": "Deixar com a vizinha do 34",
+			"cliente_id": 2
+		},
+		"pedido_produtos": [
+			{
+				"id": 2,
+				"quantidade_produto": 1,
+				"valor_produto": 250000,
+				"pedido_id": 2,
+				"produto_id": 71
+			}
+		]
+	}
+]
+```
+
+```javascript
+// HTTP Status 200 / 201 / 204
+[
+	{
+		"pedido": {
+			"id": 1,
+			"valor_total": 2120000,
+			"observacao": "Pedido cliente 1",
+			"cliente_id": 1
+		},
+		"pedido_produtos": [
+			{
+				"id": 1,
+				"quantidade_produto": 1,
+				"valor_produto": 2120000,
+				"pedido_id": 1,
+				"produto_id": 68
+			}
+		]
+	}
+]
+```
+
+```javascript
+// HTTP Status 200 / 201 / 204
+[]
+```
 
 Novos endpoints serão adicionado nas próximas sprints.
 
