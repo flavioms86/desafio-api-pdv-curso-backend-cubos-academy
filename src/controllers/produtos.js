@@ -153,11 +153,21 @@ const deleteProducts = async (req, res) => {
 
     try {
         const verifyProduct = await provider.verifyProductsIdProvider(id);
+        const verifyProductInOrders = await provider.getOrderProducts(id);
+
+        if (verifyProductInOrders.length > 0) {
+            return res.status(400).json({
+                mensagem:
+                    "O produto não pode ser excluído porque está cadastrado em algum pedido.",
+            });
+        }
+
         if (!verifyProduct) {
             return res
                 .status(404)
                 .json({ mensagem: "Não existe produto para o id informado." });
         }
+
         if (verifyProduct.produto_imagem) {
             await deleteFile(verifyProduct.produto_imagem);
         }
