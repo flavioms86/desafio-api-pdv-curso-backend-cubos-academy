@@ -700,6 +700,64 @@ Obs.: Alguns resultados foram omitidos para melhor visualização.
 }
 ```
 
+### **Listar pedido**
+
+#### `GET` `/pedido`
+
+#### **Exemplo de requisição**
+
+```javascript
+// GET /pedido
+// Sem conteúdo no corpo (body) da requisição
+```
+
+#### **Exemplos de resposta**
+
+```javascript
+// HTTP Status 200 / 201 / 204
+[
+	{
+		"pedido": {
+			"id": 1,
+			"valor_total": 2120000,
+			"observacao": "Pedido cliente 1",
+			"cliente_id": 1
+		},
+		"pedido_produtos": [
+			{
+				"id": 1,
+				"quantidade_produto": 1,
+				"valor_produto": 2120000,
+				"pedido_id": 1,
+				"produto_id": 68
+			}
+		]
+	},
+	{
+		"pedido": {
+			"id": 2,
+			"valor_total": 250000,
+			"observacao": "Deixar com a vizinha do 34",
+			"cliente_id": 2
+		},
+		"pedido_produtos": [
+			{
+				"id": 2,
+				"quantidade_produto": 1,
+				"valor_produto": 250000,
+				"pedido_id": 2,
+				"produto_id": 71
+			}
+		]
+	}
+]
+```
+
+```javascript
+// HTTP Status 200 / 201 / 204
+[]
+```
+
 Novos endpoints serão adicionado nas próximas sprints.
 
 ---
