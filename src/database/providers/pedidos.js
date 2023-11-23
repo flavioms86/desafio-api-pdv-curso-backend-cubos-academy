@@ -1,4 +1,3 @@
-const { id } = require("../../utils/joi_schemas/loginUsuario");
 const Knex = require("../knex/index");
 
 const getAllOrder = async () => {
@@ -18,8 +17,9 @@ const getAllOrder = async () => {
         );
 
     const groupedResults = results.reduce((acum, row) => {
-        const existingOrder = acum.find(order => order.pedido.id === row.pedido_id);
-
+        const existingOrder = acum.find(
+            (order) => order.pedido.id === row.pedido_id
+        );
         if (existingOrder) {
             existingOrder.pedido_produtos.push({
                 id: row.pedido_produto_id,
@@ -36,13 +36,15 @@ const getAllOrder = async () => {
                     observacao: row.observacao,
                     cliente_id: row.cliente_id,
                 },
-                pedido_produtos: [{
-                    id: row.pedido_produto_id,
-                    quantidade_produto: row.quantidade_produto,
-                    valor_produto: row.valor_produto,
-                    pedido_id: row.pedido_produto_pedido_id,
-                    produto_id: row.produto_id,
-                }],
+                pedido_produtos: [
+                    {
+                        id: row.pedido_produto_id,
+                        quantidade_produto: row.quantidade_produto,
+                        valor_produto: row.valor_produto,
+                        pedido_id: row.pedido_produto_pedido_id,
+                        produto_id: row.produto_id,
+                    },
+                ],
             });
         }
 
@@ -51,8 +53,6 @@ const getAllOrder = async () => {
 
     return groupedResults;
 };
-
-
 
 const getOrderById = async (id_cliente) => {
     const results = await Knex("pedidos")
@@ -72,7 +72,9 @@ const getOrderById = async (id_cliente) => {
         .where("cliente_id", "=", id_cliente);
 
     const groupedResults = results.reduce((acum, row) => {
-        const existingOrder = acum.find(order => order.pedido.id === row.pedido_id);
+        const existingOrder = acum.find(
+            (order) => order.pedido.id === row.pedido_id
+        );
 
         if (existingOrder) {
             existingOrder.pedido_produtos.push({
@@ -90,13 +92,15 @@ const getOrderById = async (id_cliente) => {
                     observacao: row.observacao,
                     cliente_id: row.cliente_id,
                 },
-                pedido_produtos: [{
-                    id: row.pedido_produto_id,
-                    quantidade_produto: row.quantidade_produto,
-                    valor_produto: row.valor_produto,
-                    pedido_id: row.pedido_produto_pedido_id,
-                    produto_id: row.produto_id,
-                }],
+                pedido_produtos: [
+                    {
+                        id: row.pedido_produto_id,
+                        quantidade_produto: row.quantidade_produto,
+                        valor_produto: row.valor_produto,
+                        pedido_id: row.pedido_produto_pedido_id,
+                        produto_id: row.produto_id,
+                    },
+                ],
             });
         }
 
