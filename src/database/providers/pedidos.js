@@ -86,6 +86,14 @@ const getOrderById = async (id_cliente) => {
     return formatarDados;
 };
 
+const getOrderProducts = async (produto_id) => {
+    const resultOrder = await Knex("pedido_produtos")
+        .select("produto_id")
+        .where("produto_id", produto_id);
+
+    return resultOrder;
+};
+
 const verifyProductForOrder = async (produto_id) => {
     const result = await Knex("produtos").where({ id: produto_id }).first();
     if (result) {
@@ -149,6 +157,7 @@ const updateTotalOrderPrice = async (pedido_id, valorTotal) => {
 module.exports = {
     getAllOrder,
     getOrderById,
+    getOrderProducts,
     verifyProductForOrder,
     createOrder,
     createOrderProducts,

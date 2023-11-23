@@ -32,6 +32,7 @@ const {
     createOrderProducts,
     getAllOrder,
     getOrderById,
+    getOrderProducts,
 } = require("./pedidos");
 
 module.exports = {
@@ -62,4 +63,5 @@ module.exports = {
     createOrderProducts,
     getAllOrder,
     getOrderById,
+    getOrderProducts,
 };
