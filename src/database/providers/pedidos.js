@@ -87,10 +87,10 @@ const getOrderById = async (id_cliente) => {
   return formatarDados;
 };
 
-const getOrderProducts = async () => {
+const getOrderProducts = async (produto_id) => {
   const resultOrder = await Knex("pedido_produtos")
     .select("produto_id")
-    .where("id");
+    .where("produto_id", produto_id);
 
   return resultOrder;
 };

@@ -104,9 +104,9 @@ const deleteProducts = async (req, res) => {
 
   try {
     const verifyProduct = await provider.verifyProductsIdProvider(id);
-    const verityRelationProduct = await provider.getOrderProducts();
+    const verityRelationProduct = await provider.getOrderProducts(id);
 
-    if (verityRelationProduct) {
+    if (verityRelationProduct.length > 0) {
       return res.status(400).json({
         mensagem:
           "O produto não pode ser excluído porque está cadastrado em algum pedido.",
