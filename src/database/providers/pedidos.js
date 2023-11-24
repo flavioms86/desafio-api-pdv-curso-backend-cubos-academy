@@ -142,20 +142,24 @@ const createOrderProducts = async (pedido_id, produtos) => {
             .andWhere("pedido_id", "=", pedido_id);
 
         if (verifyProductInOrder.length === 0) {
-            await Knex("pedido_produtos").insert({
-                pedido_id,
-                produto_id: produto.id,
-                quantidade_produto: produto.quantidade,
-                valor_produto: produto.valor,
-            });
-            valorTotal += produto.valor;
+            const result = await Knex("pedido_produtos")
+                .insert({
+                    pedido_id,
+                    produto_id: produto.id,
+                    quantidade_produto: produto.quantidade,
+                    valor_produto: produto.valor * produto.quantidade,
+                })
+                .returning("*");
+            valorTotal += result[0].valor_produto;
             await updateProductStockAfterOrder(produto.id, produto.quantidade);
         } else {
-            await Knex("pedido_produtos").increment({
-                quantidade_produto: produto.quantidade,
-                valor_produto: produto.valor,
-            });
-            valorTotal += produto.valor;
+            const result = await Knex("pedido_produtos")
+                .increment({
+                    quantidade_produto: produto.quantidade,
+                    valor_produto: produto.valor * produto.quantidade,
+                })
+                .returning("*");
+            valorTotal += result[0].valor_produto;
             await updateProductStockAfterOrder(produto.id, produto.quantidade);
         }
     }
