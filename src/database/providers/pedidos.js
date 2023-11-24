@@ -152,15 +152,6 @@ const createOrderProducts = async (pedido_id, produtos) => {
                 .returning("*");
             totalPrice += result[0].valor_produto;
             await updateProductStockAfterOrder(produto.id, produto.quantidade);
-        } else {
-            const result = await Knex("pedido_produtos")
-                .increment({
-                    quantidade_produto: produto.quantidade,
-                    valor_produto: produto.valor * produto.quantidade,
-                })
-                .returning("*");
-            totalPrice += result[0].valor_produto;
-            await updateProductStockAfterOrder(produto.id, produto.quantidade);
         }
     }
 
@@ -177,7 +168,7 @@ const updateProductStockAfterOrder = async (produto_id, quantidade_estoque) => {
 
 const updateTotalOrderPrice = async (pedido_id, valorTotal) => {
     await Knex("pedidos")
-        .update({ valor_total: valorTotal })
+        .increment({ valor_total: valorTotal })
         .where({ id: pedido_id });
     return;
 };
