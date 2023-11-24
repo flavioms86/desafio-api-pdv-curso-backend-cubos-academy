@@ -22,7 +22,6 @@ const getOrder = async (req, res) => {
 
         return res.status(200).json(allOrders);
     } catch (error) {
-        console.error(error.message);
         return res.status(500).json({ mensagem: "Erro interno do servidor." });
     }
 };
@@ -34,7 +33,7 @@ const makeOrder = async (req, res) => {
 
     if (!clientExists) {
         return res
-            .status(404)
+            .status(400)
             .json({ mensagem: "Não existe cliente para o id informado." });
     }
 
@@ -43,35 +42,35 @@ const makeOrder = async (req, res) => {
             mensagem: "Deve ser informado a lista de produtos a ser feito o pedido",
         });
     }
-    const produtosPedido = [];
-    for (const pedProduto of pedido_produtos) {
+    const productOrder = [];
+    for (const orderProduct of pedido_produtos) {
         const result = await provider.verifyProductsIdProvider(
-            pedProduto.produto_id
+            orderProduct.produto_id
         );
 
         if (!result) {
             return res.status(400).json({
-                mensagem: `Não existe o produto com o id ${pedProduto.produto_id}.`,
+                mensagem: `Não existe o produto com o id ${orderProduct.produto_id}.`,
             });
         }
 
-        if (result.quantidade_estoque < pedProduto.quantidade_produto) {
+        if (result.quantidade_estoque < orderProduct.quantidade_produto) {
             return res.status(400).json({
                 mensagem: `Quantidade insuficiente no estoque para o produto "${result.descricao}"`,
             });
         }
 
-        produtosPedido.push({
+        productOrder.push({
             id: result.id,
             quantidade_estoque: result.quantidade_estoque,
             valor: result.valor,
-            quantidade: pedProduto.quantidade_produto,
+            quantidade: orderProduct.quantidade_produto,
         });
     }
 
     const registrarPedido = await provider.createOrder(cliente_id, observacao);
 
-    await provider.createOrderProducts(registrarPedido[0].id, produtosPedido);
+    await provider.createOrderProducts(registrarPedido[0].id, productOrder);
 
     const html = await htmlCompiler("src/utils/email_notifications/pedido.html", {
         destinatario: clientExists.nome,

@@ -128,14 +128,14 @@ const verifyProductForOrder = async (produto_id) => {
 };
 
 const createOrder = async (cliente_id, observacao) => {
-    const pedido = await Knex("pedidos")
+    const order = await Knex("pedidos")
         .insert({ cliente_id, observacao, valor_total: 0 })
         .returning("*");
-    return pedido;
+    return order;
 };
 
 const createOrderProducts = async (pedido_id, produtos) => {
-    let valorTotal = 0;
+    let totalPrice = 0;
     for (const produto of produtos) {
         const verifyProductInOrder = await Knex("pedido_produtos")
             .where("produto_id", "=", produto.id)
@@ -150,7 +150,7 @@ const createOrderProducts = async (pedido_id, produtos) => {
                     valor_produto: produto.valor * produto.quantidade,
                 })
                 .returning("*");
-            valorTotal += result[0].valor_produto;
+            totalPrice += result[0].valor_produto;
             await updateProductStockAfterOrder(produto.id, produto.quantidade);
         } else {
             const result = await Knex("pedido_produtos")
@@ -159,12 +159,12 @@ const createOrderProducts = async (pedido_id, produtos) => {
                     valor_produto: produto.valor * produto.quantidade,
                 })
                 .returning("*");
-            valorTotal += result[0].valor_produto;
+            totalPrice += result[0].valor_produto;
             await updateProductStockAfterOrder(produto.id, produto.quantidade);
         }
     }
 
-    await updateTotalOrderPrice(pedido_id, valorTotal);
+    await updateTotalOrderPrice(pedido_id, totalPrice);
     return;
 };
 

@@ -16,9 +16,9 @@ const registerProducts = async (req, res) => {
 
         const product = await provider.createProductProvider(
             descricao,
-            Number(quantidade_estoque),
-            Number(valor),
-            Number(categoria_id)
+            quantidade_estoque,
+            valor,
+            categoria_id
         );
 
         if (produto_imagem) {
@@ -44,18 +44,17 @@ const registerProducts = async (req, res) => {
 
                 const imageName = `image-${Date.now().toString()}`;
 
-                const arquivo = await uploadFile(
+                const file = await uploadFile(
                     `produtos/${product.id}/${imageName}.${fileType}`,
                     base64DataFile,
                     "base64",
                     fileType
                 );
 
-                await provider.updateProductImage(product.id, arquivo.Location);
+                await provider.updateProductImage(product.id, file.Location);
                 const result = await provider.verifyProductsIdProvider(product.id);
                 return res.status(201).json(result);
             } catch (error) {
-                console.log(error.message);
                 return res
                     .status(500)
                     .json({ mensagtem: "Erro interno do servidor." });
@@ -92,9 +91,9 @@ const updateProducts = async (req, res) => {
         const product = await provider.updateProductProvider(
             id,
             descricao,
-            Number(quantidade_estoque),
-            Number(valor),
-            Number(categoria_id)
+            quantidade_estoque,
+            valor,
+            categoria_id
         );
 
         if (produto_imagem) {
@@ -120,7 +119,7 @@ const updateProducts = async (req, res) => {
 
                 const imageName = `image-${Date.now().toString()}`;
 
-                const arquivo = await uploadFile(
+                const file = await uploadFile(
                     `produtos/${product.id}/${imageName}.${fileType}`,
                     base64DataFile,
                     "base64",
@@ -129,13 +128,12 @@ const updateProducts = async (req, res) => {
 
                 await deleteFile(verifyProduct.produto_imagem);
 
-                await provider.updateProductImage(product.id, arquivo.Location);
+                await provider.updateProductImage(product.id, file.Location);
 
                 const result = await provider.verifyProductsIdProvider(product.id);
 
                 return res.status(201).json(result);
             } catch (error) {
-                console.log(error.message);
                 return res
                     .status(500)
                     .json({ mensagtem: "Erro interno do servidor." });
