@@ -57,6 +57,12 @@ EMAIL_USER= (usuário).
 EMAIL_PASS= (senha).
 EMAIL_NAME= (nome do remetente do email).
 EMAIL_FROM= (email do remetente).
+ENDPOINT_S3= (endereço do bucket para upload de imagem, aqui usado a backblaze).
+REGION= (região a ser conectada)
+KEY_ID= (id da chave)
+KEY_NAME= (nome da chave)
+APP_KEY= (key)
+STORAGE_NAME= (nome do bucket de armazenamento)
 ```
 
 As variáveis relacionadas ao banco de dados não precisam ser configuradas para uso na máquina local, pois será utilizado o banco de dados leve SQlite3, gerenciado pelo próprio knex. 
